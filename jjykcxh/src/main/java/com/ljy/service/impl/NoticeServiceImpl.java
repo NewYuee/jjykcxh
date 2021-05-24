@@ -17,4 +17,9 @@ public class NoticeServiceImpl implements NoticeService {
     public List<Notice> getAll() {
         return noticeMapper.selectByExample(null);
     }
+
+    @Override
+    public Notice getNoticeById(Integer id) {
+        return noticeMapper.selectByPrimaryKey(id);
+    }
 }

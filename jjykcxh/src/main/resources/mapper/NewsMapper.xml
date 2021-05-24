@@ -5,7 +5,7 @@
     <id column="news_id" property="newsId" jdbcType="INTEGER" />
     <result column="news_title" property="newsTitle" jdbcType="VARCHAR" />
     <result column="author_name" property="authorName" jdbcType="VARCHAR" />
-    <result column="news_context" property="newsContext" jdbcType="VARCHAR" />
+    <result column="news_context" property="newsContext" jdbcType="LONGVARCHAR" />
     <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
   </resultMap>
   <resultMap id="ResultMapWithBLOBs" type="com.ljy.entity.News" extends="BaseResultMap" >

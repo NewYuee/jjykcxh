@@ -16,6 +16,11 @@
     float:left;
     padding: 5px;
 }
+
+.displayed{
+    display:none;
+}
+
 .column.side{
     height:100%;
     background-color: white;

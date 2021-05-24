@@ -1,0 +1,161 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="Generator" content="EditPlus®">
+    <meta name="Author" content="">
+    <meta name="Keywords" content="">
+    <meta name="Description" content="">
+    <title>成都大学交际与口才协会官网</title>
+    <link rel="icon" href="/jjykcxh/static/img/favicon.ico" type="images/x-ico"/>
+    <link rel="stylesheet" type="text/css" href="/jjykcxh/static/css/menu.css">
+    <link rel="stylesheet" type="text/css" href="/jjykcxh/static/css/column.css">
+    <script src="/jjykcxh/static/js/lbt.js"></script>
+    <script src="/jjykcxh/static/js/jquery-1.8.2.min.js"></script>
+</head>
+<body>
+<div class="head"><a href="/jjykcxh" title="成都大学交际与口才协会欢迎您！"><img src="/jjykcxh/static/img/clubphoto.jpg" id="top"
+                                                                  width="140px"
+                                                                  height="140px"
+                                                                  style="float:left; border-radius: 50%;"></a>
+    <h2 class="title">成都大学交际与口才协会</h2></div>
+<th:block th:include="common.html :: top_nav"></th:block>
+<div class="container">
+    <div class="mySlides fade">
+        <img src="/jjykcxh/static/img/yjls.jpg" width="auto" height="600px">
+        <div class="text">四川省第三届演讲联赛成都东赛区决赛</div>
+    </div>
+
+    <div class="mySlides fade">
+        <img src="/jjykcxh/static/img/chengli.jpg" width="auto" height="600px">
+        <div class="text">交协与成理演讲协会联谊</div>
+    </div>
+
+    <div class="mySlides fade">
+        <img src="/jjykcxh/static/img/liyi.jpg" width="auto" height="600px">
+        <div class="text">交协与礼仪协会联谊</div>
+    </div>
+    <div class="mySlides fade">
+        <img src="/jjykcxh/static/img/jxydf.jpg" width="auto" height="600px">
+        <div class="text">交协与大风联谊</div>
+    </div>
+    <div class="mySlides fade">
+        <img src="/jjykcxh/static/img/dushufenxiang.jpg" width="auto" height="600px">
+        <div class="text">一次读书分享会</div>
+    </div>
+    <a class="prev" onclick="plusSlides(-1)">❮</a>
+    <a class="next" onclick="plusSlides(1)">❯</a>
+    <br>
+    <div style="text-align:center">
+        <span class="dot" onclick="currentSlide(1)"></span>
+        <span class="dot" onclick="currentSlide(2)"></span>
+        <span class="dot" onclick="currentSlide(3)"></span>
+        <span class="dot" onclick="currentSlide(4)"></span>
+        <span class="dot" onclick="currentSlide(5)"></span>
+    </div>
+</div>
+<script src="/jjykcxh/static/js/getTime.js"></script>
+<div class="clock"><img style="float: left;" src="/jjykcxh/static/img/clock.png">
+    <p id="txt" style="float:left"></p><img style="float: right;" src="/jjykcxh/static/img/baozhu.jpg">
+    <p style="float:right" id="days"></p></div>
+<div class="cococo">
+    <div class="column side">
+        <div class="title_L">音乐分享</div>
+        <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=100% height=520
+                src="https://music.163.com/outchain/player?type=0&id=3126958414&auto=0&height=430"></iframe>
+    </div>
+    <div class="column middle">
+        <div class="title_1">交协要闻 <span style="float:right"><a href="/jjykcxh/news.html"
+                                                               style="text-decoration: none; color:rgb(92, 77, 77)">更多</a></span>
+        </div>
+        <div id="news_area">
+        </div>
+        <br><br>
+        <div class="gap"></div>
+        <div class="gap"></div>
+        <div class="title_2">通知公告<span style="float:right"><a href="/jjykcxh/notice.html"
+                                                              style="text-decoration: none; color:rgb(92, 77, 77)">更多</a></span>
+        </div>
+        <div id="notice_area">
+        </div>
+        <div style="width: 100%;height:60px;"></div>
+        <br><br>
+        <div class="gap"></div>
+        <br><br>
+        <div class="gap"></div>
+    </div>
+    <div class="column side">
+        <div class="title_R"><a src="/jjykcxh/albums">交协印象</a></div>
+        <div id="right_column">
+
+        </div>
+    </div>
+</div>
+
+<th:block th:include="common.html :: footer"></th:block>
+</body>
+
+<script>
+    $(function () {
+        displayNewsInfo();
+        displayNoticeInfo();
+        displayAlbumInfo();
+    });
+
+    function displayAlbumInfo() {
+        $.ajax({
+            url: "/jjykcxh/album/getAll",
+            type: "GET",
+            success: function (result) {
+                var albums = result.other.albums;
+                var s = '';
+                $.each(albums, function (i, item) {
+                    s += '<div class="photos"><div class="polaroid"><a target="_blank" href="#"><img src="/jjykcxh/static/img/' + item.pics[0].picName+'"></a><div class="desc">' + item.albumName + '</div></div></div>';
+                });
+                $("#right_column").html(s);
+            }
+        })
+
+    }
+
+    function displayNewsInfo() {
+        var pn = 1;
+        $.ajax({
+            url: "/jjykcxh/news/getNews",
+            data: "pn=" + pn,
+            type: "GET",
+            success: function (result) {
+                var news = result.other.pageInfo.list;
+                var str = '';
+                $.each(news, function (i, item) {
+                    var newsUrl = "/jjykcxh/news/detail?newsId=" + item.newsId;
+                    var imgSrc = "./static/img/laba.png"
+                    var updateTime = item.updateTime;
+                    str += '<div class="news"><img src="' + imgSrc + '"><a href="' + newsUrl + '">' + item.newsTitle + '</a><span>' + updateTime + '</span></div>';
+                });
+                $("#news_area").html(str);
+            }
+        });
+    }
+
+    function displayNoticeInfo() {
+        var pn = 1;
+        $.ajax({
+            url: "/jjykcxh/notice/getNotices",
+            data: "pn=" + pn,
+            type: "GET",
+            success: function (result) {
+                var notices = result.other.pageInfo.list;
+                var str = '';
+                $.each(notices, function (i, item) {
+                    var noticeUrl = "/jjykcxh/notice/detail?noticeId=" + item.noticeId;
+                    var imgSrc = "./static/img/laba.png"
+                    var updateTime = item.updateTime;
+                    str += '<div class="news"><img src="' + imgSrc + '"><a href="' + noticeUrl + '">' + item.noticeTitle + '</a><span>' + updateTime + '</span></div>';
+                });
+                $("#notice_area").html(str);
+            }
+        });
+    }
+</script>
+</html>

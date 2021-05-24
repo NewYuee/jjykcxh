@@ -8,4 +8,14 @@
         <!--设置mybatis输出日志-->
         <setting name="logImpl" value="STDOUT_LOGGING"/>
     </settings>
+
+    <typeAliases>
+        <package name="com.ljy.entity"/>
+    </typeAliases>
+    <plugins>
+        <plugin interceptor="com.github.pagehelper.PageInterceptor">
+            <!--分页参数合理化-->
+            <property name="reasonable" value="true"/>
+        </plugin>
+    </plugins>
 </configuration>
