@@ -2,9 +2,15 @@ package com.ljy.controller;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.ljy.VO.CommentVO;
+import com.ljy.entity.Comment;
 import com.ljy.entity.Msg;
 import com.ljy.entity.News;
+import com.ljy.entity.User;
+import com.ljy.service.CommentService;
 import com.ljy.service.NewsService;
+import com.ljy.service.UserService;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,6 +23,7 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -25,6 +32,12 @@ public class NewsController {
     @Autowired
     NewsService newsService;
 
+    @Autowired
+    CommentService commentService;
+
+    @Autowired
+    UserService userService;
+
     @RequestMapping("/getAll")
     @ResponseBody
     public Msg getNews(){
@@ -32,15 +45,11 @@ public class NewsController {
         return Msg.success().add("news",list);
     }
 
-/*    @RequestMapping("")
-    public String toNewsListPge(Model model){
-        List<News> list=newsService.getNews();
-        model.addAttribute("newsList",list);
-        return "news";
-    }*/
 
     @RequestMapping("/detail")
     public ModelAndView toDetailPage(HttpServletRequest request){
+
+
         String newsId =request.getParameter("newsId");
         News news=null;
         //检验是否为符合要求的参数
@@ -58,11 +67,25 @@ public class NewsController {
             modelAndView.setViewName("news");
             return modelAndView;
         }
+        int nid=news.getNewsId();
+        SimpleDateFormat df=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        List<Comment> comments = commentService.getCommentsByNewsId(nid);
+        List<CommentVO> commentVOList=new ArrayList<>();
+        for (Comment comment:comments){
+            CommentVO commentVO=new CommentVO();
+            BeanUtils.copyProperties(comment,commentVO);
+            String updateTime = df.format(comment.getUpdateTime());
+            commentVO.setUpdateTime(updateTime);
+            User user = userService.getUserById(comment.getUserId());
+            commentVO.setUserName(user.getUserName());
+            commentVOList.add(commentVO);
+        }
+
         //正常执行
         ModelAndView modelAndView=new ModelAndView();
         modelAndView.setViewName("detail");
         modelAndView.addObject("news",news);
-        SimpleDateFormat df=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        modelAndView.addObject("comments",commentVOList);
         modelAndView.addObject("updateTime",df.format(news.getUpdateTime()));
         return modelAndView;
     }

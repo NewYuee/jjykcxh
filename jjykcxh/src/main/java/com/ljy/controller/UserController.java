@@ -4,6 +4,7 @@ import com.ljy.entity.Msg;
 import com.ljy.entity.User;
 import com.ljy.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -14,6 +15,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.net.URI;
 import java.util.List;
 
 //import javax.annotation.Resource;
@@ -55,7 +57,8 @@ public class UserController {
             session.setAttribute("userInfo",user1);
             return Msg.success();
         }
-        return Msg.fail();
+        String errorInfo="账号密码出错或不存在账号";
+        return Msg.fail().add("errorInfo",errorInfo);
     }
 
     @RequestMapping("logout")

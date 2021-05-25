@@ -10,4 +10,5 @@ public interface UserService {
     User selectOne(User user);
     int insertOne(User user);
     List<User> selectByUserName(String username);
+    User getUserById(Integer id);
 }

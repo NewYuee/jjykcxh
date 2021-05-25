@@ -22,10 +22,16 @@ public class CommentServiceImpl implements CommentService{
 
     @Override
     public List<Comment> getCommentsByNewsId(Integer newsId) {
-        CommentExample example=new CommentExample();
-        CommentExample.Criteria criteria = example.createCriteria();
-        criteria.andNewsIdEqualTo(newsId);
-        List<Comment> list=commentMapper.selectByExample(example);
-        return list;
+        return commentMapper.getCommentByNewsId(newsId);
+    }
+
+    @Override
+    public int insertComment(Comment comment) {
+        return commentMapper.insert(comment);
+    }
+
+    @Override
+    public int deletCommentById(Integer id) {
+        return commentMapper.deleteByPrimaryKey(id);
     }
 }

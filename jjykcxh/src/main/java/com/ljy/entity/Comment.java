@@ -19,6 +19,7 @@ public class Comment {
     private Integer newsId;
 
     private Integer userId;
+    public Comment(){};
 
     public Integer getCommentId() {
         return commentId;
@@ -73,6 +74,15 @@ public class Comment {
     }
 
     public void setUserId(Integer userId) {
+        this.userId = userId;
+    }
+
+    public Comment(String commentContext, Date updateTime, Integer albumId, Integer repliedCommentId, Integer newsId, Integer userId) {
+        this.commentContext = commentContext;
+        this.updateTime = updateTime;
+        this.albumId = albumId;
+        this.repliedCommentId = repliedCommentId;
+        this.newsId = newsId;
         this.userId = userId;
     }
 }

@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title th:inline="text">[[${notice.noticeTitle}]]</title>
+
+    <link rel="stylesheet" type="text/css" href="/jjykcxh/static/css/comment.css">
+    <link rel="stylesheet" type="text/css" href="/jjykcxh/static/css/comment_style.css">
+    <link rel="stylesheet" type="text/css" href="/jjykcxh/static/css/menu.css">
+    <link rel="stylesheet" type="text/css" href="/jjykcxh/static/css/column.css">
+    <link rel="stylesheet" type="text/css" href="/jjykcxh/static/bootstrap-3.3.7-dist/css/bootstrap.css">
+    <script src="/jjykcxh/static/bootstrap-3.3.7-dist/js/bootstrap.js"></script>
+    <script src="/jjykcxh/static/js/jquery-1.8.2.min.js"></script>
+    <link rel="icon" href="/jjykcxh/static/img/favicon.ico" type="images/x-ico"/>
+    <script src="/jjykcxh/static/js/jquery.flexText.js" ></script>
+</head>
+<body>
+<th:block th:include="common.html :: header"></th:block>
+<th:block th:include="common.html :: top_nav"></th:block>
+<th:block th:include="common.html :: notice_container"></th:block>
+<th:block th:include="common.html :: footer"></th:block>
+<script src="/jjykcxh/static/layer/layer.js"></script>
+<script th:inline="javascript">
+    $(function () {
+        $('.content').flexText();
+    });
+
+    var userName=$(".displayed").text();
+    if (userName=="0"){
+        $(".plBtn").click(function () {
+            layer.msg("评论留言请先登录噢~");
+        })
+    }
+    else{
+        <!--点击评论创建评论条-->
+        $('.commentAll').on('click','.plBtn',function(){
+            var myDate = new Date();
+            //获取当前年
+            var year=myDate.getFullYear();
+            //获取当前月
+            var month=myDate.getMonth()+1;
+            //获取当前日
+            var date=myDate.getDate();
+            var h=myDate.getHours();       //获取当前小时数(0-23)
+            var m=myDate.getMinutes();     //获取当前分钟数(0-59)
+            if(m<10) m = '0' + m;
+            var s=myDate.getSeconds();
+            if(s<10) s = '0' + s;
+            var now=year+'-'+month+"-"+date+" "+h+':'+m+":"+s;
+            //获取输入内容
+            var oSize = $(this).siblings('.flex-text-wrap').find('.comment-input').val();
+            console.log(oSize);
+
+
+            //动态创建评论模块
+            oHtml = '<div class="comment-show-con clearfix"><div class="comment-show-con-img pull-left"><img src="/jjykcxh/static/img/user_pic.jpg" alt=""></div> <div class="comment-show-con-list pull-left clearfix"><div class="pl-text clearfix"> <a href="#" class="comment-size-name">'+userName+' : </a> <span class="my-pl-con">&nbsp;'+ oSize +'</span> </div> <div class="date-dz"> <span class="date-dz-left pull-left comment-time">'+now+'</span> <div class="date-dz-right pull-right comment-pl-block"><a href="javascript:;" class="removeBlock">删除</a> </div> </div></div> </div>';
+            if(oSize.replace(/(^\s*)|(\s*$)/g, "") != ''){
+                $(this).parents('.reviewArea ').siblings('.comment-show').prepend(oHtml);
+                $(this).siblings('.flex-text-wrap').find('.comment-input').prop('value','').siblings('pre').find('span').text('');
+            }
+        });
+    }
+</script>
+</body>
+</html>

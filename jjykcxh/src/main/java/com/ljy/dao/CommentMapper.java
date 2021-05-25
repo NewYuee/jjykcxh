@@ -11,6 +11,7 @@ public interface CommentMapper {
 
     int deleteByExample(CommentExample example);
 
+
     int deleteByPrimaryKey(Integer commentId);
 
     int insert(Comment record);
@@ -18,6 +19,8 @@ public interface CommentMapper {
     int insertSelective(Comment record);
 
     List<Comment> selectByExample(CommentExample example);
+
+    List<Comment> getCommentByNewsId(Integer id);
 
     Comment selectByPrimaryKey(Integer commentId);
 

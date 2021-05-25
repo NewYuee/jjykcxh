@@ -1,0 +1,101 @@
+*{
+    box-sizing:border-box;
+}
+
+.clock{
+    padding: 5px;
+    height:40px;
+    display: block;
+    background-image: linear-gradient(to right,white,rgb(240, 252, 71), yellow,white);
+    font-size: 25px;
+    font-weight: bolder;
+    text-align: left 30px;
+}
+
+.column{
+    float:left;
+    padding: 5px;
+}
+
+.displayed{
+    display:none;
+}
+
+.column.side{
+    height:100%;
+    background-color: white;
+    width:25%;
+}
+.column.middle{
+    width:50%;
+}
+
+.cococo:after{
+    content:"";
+    display:table;
+    clear:both;
+}
+
+@media screen and (max-width: 800px) {
+    .column.side, .column.middle {
+      width: 100%;
+    }
+  }
+
+.photos{
+      box-sizing: border-box;
+      padding:5px 3px;
+      float:left;
+      width: 49%;
+      font-size: 15px;
+      font-family: 微软雅黑;
+      color: rgb(99, 66, 66);
+  }
+
+  .polaroid{
+      border: 1px solid #ccc;
+  }
+
+  .polaroid:hover{
+    border: 1px solid #777;
+  }
+
+  .polaroid img{
+    width: 100%;
+    height: auto;
+  }
+
+  .desc{
+    padding: 8px;
+
+    text-align: center;
+  }
+
+@media only screen and (max-width: 1500px){
+    .photos {
+        width: 100%;
+        font-size: 10px;
+        font-family: 微软雅黑;
+        color: rgb(99, 66, 66);
+    }
+}
+
+.bktop{
+  border-radius: 6px;
+  padding: 8px;
+  background-color: rgba(204,204,204,0.4);
+  font-size: 10px;
+  font-family: 微软雅黑;
+  text-align: center;
+  position:fixed;
+  bottom:20px;
+  right:5px
+}
+.bktop a{
+  text-decoration: none;
+  color: black;
+}
+
+.bktop:hover{
+  background-color: #f1f1f1;
+}
