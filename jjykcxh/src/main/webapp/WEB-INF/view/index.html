@@ -2,7 +2,6 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <meta name="Generator" content="EditPlus®">
     <meta name="Author" content="">
     <meta name="Keywords" content="">
     <meta name="Description" content="">
@@ -20,7 +19,7 @@
                                                                   style="float:left; border-radius: 50%;"></a>
     <h2 class="title">成都大学交际与口才协会</h2></div>
 <th:block th:include="common.html :: top_nav"></th:block>
-<div class="container">
+<div class="containerlb">
     <div class="mySlides fade">
         <img src="/jjykcxh/static/img/yjls.jpg" width="auto" height="600px">
         <div class="text">四川省第三届演讲联赛成都东赛区决赛</div>
@@ -85,7 +84,7 @@
         <div class="gap"></div>
     </div>
     <div class="column side">
-        <div class="title_R"><a src="/jjykcxh/albums">交协印象</a></div>
+        <div class="title_R"><a href="/jjykcxh/album/index" style="text-decoration: none;color: grey">交协印象</a></div>
         <div id="right_column">
 
         </div>
@@ -110,7 +109,7 @@
                 var albums = result.other.albums;
                 var s = '';
                 $.each(albums, function (i, item) {
-                    s += '<div class="photos"><div class="polaroid"><a target="_blank" href="#"><img src="/jjykcxh/static/img/' + item.pics[0].picName+'"></a><div class="desc">' + item.albumName + '</div></div></div>';
+                    s += '<div class="photos"><div class="polaroid"><a target="_blank" href="#"><img src="http://120.78.196.234/resource/jjykcxh/album/' + item.pics[0].picName+'"></a><div class="desc">' + item.albumName + '</div></div></div>';
                 });
                 $("#right_column").html(s);
             }

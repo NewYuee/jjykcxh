@@ -6,6 +6,7 @@ import com.ljy.entity.Msg;
 import com.ljy.service.AlbumService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -22,5 +23,12 @@ public class AlbumController {
     public Msg getAll(){
         List<AlbumVO> list = albumService.getAlbums();
         return Msg.success().add("albums",list);
+    }
+
+    @RequestMapping("/index")
+    public String toalbum(Model model){
+        List<AlbumVO> list = albumService.getAlbums();
+        model.addAttribute("albumsVO",list);
+        return "albums";
     }
 }

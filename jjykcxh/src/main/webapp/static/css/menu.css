@@ -2,6 +2,31 @@
     margin:0 auto;
     padding:0;
 }
+
+.displayed{
+    display:none;
+}
+
+.bktop{
+    border-radius: 6px;
+    padding: 8px;
+    background-color: rgba(204,204,204,0.4);
+    font-size: 10px;
+    font-family: 微软雅黑;
+    text-align: center;
+    position:fixed;
+    bottom:20px;
+    right:5px
+}
+.bktop a{
+    text-decoration: none;
+    color: black;
+}
+
+.bktop:hover{
+    background-color: #f1f1f1;
+}
+
 .head{
     float:left;
     width:100%;
@@ -218,7 +243,7 @@
 }
  
 
-.container{
+.containerlb{
     height: 650px;
     padding-top: 10px;
     text-align: center;

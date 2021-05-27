@@ -11,4 +11,6 @@ public interface CommentService {
     List<Comment> getCommentsByNewsId(Integer newsId);
     int insertComment(Comment comment);
     int deletCommentById(Integer id);
+
+    List<Comment> getCommentsByAlbumId(Integer albumId);
 }

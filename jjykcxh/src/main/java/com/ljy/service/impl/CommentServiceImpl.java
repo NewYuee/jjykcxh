@@ -34,4 +34,12 @@ public class CommentServiceImpl implements CommentService{
     public int deletCommentById(Integer id) {
         return commentMapper.deleteByPrimaryKey(id);
     }
+
+    @Override
+    public List<Comment> getCommentsByAlbumId(Integer albumId) {
+        CommentExample example=new CommentExample();
+        CommentExample.Criteria criteria = example.createCriteria();
+        criteria.andAlbumIdEqualTo(albumId);
+        return commentMapper.selectByExample(example);
+    }
 }

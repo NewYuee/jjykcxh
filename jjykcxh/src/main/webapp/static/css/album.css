@@ -1,0 +1,53 @@
+.polaroid {
+    width: 100%;
+    background-color: white;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    margin-bottom: 25px;
+}
+
+.desc {
+    text-align: center;
+    padding: 10px 20px;
+}
+
+.desc p{
+    overflow: hidden;white-space: nowrap;text-overflow: ellipsis
+}
+
+.footer {
+    background-image: linear-gradient(to right,white, rgb(226, 226, 179));
+    padding: 1px;
+    text-align: center;
+    padding-top: 40px;;
+    height:220px;
+    width: 100%;
+}
+
+.logo{
+    text-shadow:3px 3px 3px rgb(243, 220, 10);
+    color: rgb(231, 158, 22);
+    font-family: 华文行楷;
+    font-size: 25px;
+    float:left;
+    position: relative;
+}
+
+.logo img{
+    border-radius: 50%;
+}
+
+.contact{
+    padding-top: 40px;
+    font-family: 微软雅黑;
+    font-size: 15px;
+    float:left;
+}
+.contact span{
+    display: inline;
+    float: left;
+
+}
+
+.caption h3{
+    overflow: hidden;white-space: nowrap;text-overflow: ellipsis
+}

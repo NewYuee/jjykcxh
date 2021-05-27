@@ -1,5 +1,7 @@
 package com.ljy.VO;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.ljy.entity.Comment;
 import com.ljy.entity.Pic;
 
 import java.util.*;
@@ -9,9 +11,24 @@ public class AlbumVO {
 
     private String albumName;
 
+    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss",timezone="UTC")
     private Date updateTime;
 
     private String authorName;
+
+    private Integer c_count;
+
+    public Integer getC_count() {
+        return c_count;
+    }
+
+    public void setC_count(Integer c_count) {
+        this.c_count = c_count;
+    }
+
+    private List<Pic> pics=new ArrayList<>();
+
+//    private List<Comment> comments=new ArrayList<>();
 
     public List<Pic> getPics() {
         return pics;
@@ -20,8 +37,6 @@ public class AlbumVO {
     public void setPics(List<Pic> pics) {
         this.pics = pics;
     }
-
-    private List<Pic> pics=new ArrayList<>();
 
     public Integer getAlbumId() {
         return albumId;
