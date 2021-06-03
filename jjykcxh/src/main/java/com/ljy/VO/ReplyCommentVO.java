@@ -1,11 +1,6 @@
 package com.ljy.VO;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
-
-import java.util.Date;
-import java.util.List;
-
-public class CommentVO {
+public class ReplyCommentVO {
     private Integer commentId;
 
     private String userName;
@@ -19,16 +14,6 @@ public class CommentVO {
     private Integer repliedCommentId;
 
     private Integer newsId;
-
-    private List<ReplyCommentVO> repliedComment;
-
-    public List<ReplyCommentVO> getRepliedComment() {
-        return repliedComment;
-    }
-
-    public void setRepliedComment(List<ReplyCommentVO> repliedComment) {
-        this.repliedComment = repliedComment;
-    }
 
     public Integer getCommentId() {
         return commentId;

@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <title>交协印象</title>
+    <link rel="stylesheet" type="text/css" href="/jjykcxh/static/css/comment.css">
+    <link rel="stylesheet" type="text/css" href="/jjykcxh/static/css/comment_style.css">
     <link rel="stylesheet" type="text/css" href="/jjykcxh/static/bootstrap-3.3.7-dist/css/bootstrap.css">
-    <script src="/jjykcxh/static/bootstrap-3.3.7-dist/js/bootstrap.js"></script>
-    <script src="/jjykcxh/static/js/jquery-1.8.2.min.js"></script>
     <link rel="stylesheet" type="text/css" href="/jjykcxh/static/css/menu.css">
     <link rel="stylesheet" type="text/css" href="/jjykcxh/static/css/album.css">
     <link rel="icon" href="/jjykcxh/static/img/favicon.ico" type="images/x-ico"/>
@@ -15,16 +15,26 @@
 <h1 class="text-hide">空一下</h1>
 <div class="container" style="background-color: #ebebeb;padding-top: 15px">
     <div class="container-fluid">
-        <div class="col-sm-6 col-md-3">
-            <div class="thumbnail">
-                <img src="http://120.78.196.234/resource/jjykcxh/album/14958390.jpg">
-                <div class="caption">
-                    <a href="http://120.78.196.234/resource/jjykcxh/album/14958390.jpeg"><h3>知更鸟的春天</h3></a>
-                    <p><span class="glyphicon glyphicon-user" aria-hidden="true"></span><a href="#">嘻嘻</a></p>
-                    <p><span class="glyphicon glyphicon-time" aria-hidden="true"></span>2022-22-22 25:61:100</p>
-                    <p align="right"><a href="#" role="button"><span class="glyphicon glyphicon-comment" aria-hidden="true"></span><span class="badge">99+</span></a> <a href="#" role="button"><span
-                            class="glyphicon glyphicon-cloud-download" aria-hidden="true"></span></a></p>
+
+    </div>
+</div>
+
+<!--评论的模态框-->
+<div id="commentModel" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="commentAll">
+                <!--评论区域 begin-->
+                <div class="reviewArea clearfix">
+                    <textarea class="content comment-input" placeholder="Please enter a comment&hellip;"></textarea>
+                    <a href="javascript:;" class="plBtn">评论</a>
                 </div>
+                <!--评论区域 end-->
+                <!--回复区域 begin-->
+                <div class="comment-show">
+                    <!--评论content-->
+                </div>
+                <!--回复区域 end-->
             </div>
         </div>
     </div>
@@ -40,30 +50,36 @@
     </div>
 </div>
 
+<script src="https://libs.baidu.com/jquery/2.1.4/jquery.min.js"></script>
+<script src="/jjykcxh/static/bootstrap-3.3.7-dist/js/bootstrap.js"></script>
+<script src="/jjykcxh/static/layer/layer.js"></script>
+<script src="/jjykcxh/static/js/jquery.flexText.js"></script>
 <script>
     $(function () {
         displayAlbumInfo();
     })
+
+
     function displayAlbumInfo() {
         $.ajax({
-            url:"/jjykcxh/album/getAll",
-            type:"GET",
-            success:function (result) {
-                var albums=result.other.albums;
-                var thtml='';
-                $.each(albums,function (i,item) {
-                    var firstpicname=item.pics[0];
-                    var author=item.authorName;
-                    var updatetime=item.updateTime;
-                    var c_nums=item.c_count;
-                    var albumName=item.albumName;
-                    var id=item.albumId;
-                    thtml+='<div class="col-sm-6 col-md-3"><div class="thumbnail">'+
-                        '<img src="http://120.78.196.234/resource/jjykcxh/album/'+firstpicname.picName+'"><div class="caption">'+
-                        '<a href="" title="'+albumName+'"><h3>'+albumName+'</h3></a>'+
-                    '<p><span class="glyphicon glyphicon-user" aria-hidden="true"></span><a href="#">'+author+'</a></p>'+
-                    '<p><span class="glyphicon glyphicon-time" aria-hidden="true"></span>'+updatetime+'</p> <p align="right"><a href="#" role="button"><span class="glyphicon glyphicon-comment"aria-hidden="true"></span><span '+
-                'class="badge">'+c_nums+'</span></a> <a href="#" role="button"><span class="glyphicon glyphicon-cloud-download" aria-hidden="true"></span></a></p> </div> </div> </div>';
+            url: "/jjykcxh/album/getAll",
+            type: "GET",
+            success: function (result) {
+                var albums = result.other.albums;
+                var thtml = '';
+                $.each(albums, function (i, item) {
+                    var firstpicname = item.pics[0];
+                    var author = item.authorName;
+                    var updatetime = item.updateTime;
+                    var c_nums = item.c_count;
+                    var albumName = item.albumName;
+                    var id = item.albumId;
+                    thtml += '<div class="col-sm-6 col-md-3"><div id="' + item.albumId + '" class="thumbnail">' +
+                        '<img src="http://120.78.196.234/resource/jjykcxh/album/' + firstpicname.picName + '"><div class="caption">' +
+                        '<a id="album" href="javascript:;" title="' + albumName + '"><h3>' + albumName + '</h3></a>' +
+                        '<p><span class="glyphicon glyphicon-user" aria-hidden="true"></span><a id="author" href="javascript:;">' + author + '</a></p>' +
+                        '<p><span class="glyphicon glyphicon-time" aria-hidden="true"></span>' + updatetime + '</p> <p align="right"><a href="javascript:;" id="comment" role="button"><span class="glyphicon glyphicon-comment"aria-hidden="true"></span>评论<span ' +
+                        'class="badge">' + c_nums + '</span></a> &nbsp;<a id="download" href="javascript:;" role="button"><span class="glyphicon glyphicon-cloud-download" aria-hidden="true"></span></a>&nbsp; &nbsp;<a id="upload" href="javascript:;" role="button"><span class="glyphicon glyphicon-cloud-upload" aria-hidden="true"></span></a></p> </div> </div> </div>';
                     $(".container-fluid").html(thtml);
                 })
 
@@ -71,7 +87,260 @@
         })
     }
 
+    var userName = $("#userName").text();
+    var albumId;
+
+    //点击评论，弹出评论的模态框
+    $(document).on("click", "#comment", function () {
+        //得到点击相册的相册id，根据id查询需要的照片和评论信息
+        albumId = $(this).parent().parent().parent().attr("id");
+
+        $.ajax({
+            url: "/jjykcxh/comment/getCommentsByAlbumId",
+            data: "albumId=" + albumId,
+            type: "GET",
+            success: function (result) {
+                console.log("success~~~~~~~~~~");
+                //1.如果成功，那么就创建评论的模态框
+                var comments = result.other.comments;
+                setCommentModel(comments);
+            }
+        })
+
+        //最后弹出模态框的内容
+        $("#commentModel").modal("show");
+    });
+
+    //点击评论进行评论
+    $(".plBtn").click(function () {
+        var myDate = new Date();
+        //获取当前年
+        var year=myDate.getFullYear();
+        //获取当前月
+        var month=myDate.getMonth()+1;
+        //获取当前日
+        var date=myDate.getDate();
+        var h=myDate.getHours();       //获取当前小时数(0-23)
+        var m=myDate.getMinutes();     //获取当前分钟数(0-59)
+        if(m<10) m = '0' + m;
+        var s=myDate.getSeconds();
+        if(s<10) s = '0' + s;
+        //评论时间
+        var now=year+'-'+month+"-"+date+" "+h+':'+m+":"+s;
+        var context = $(this).parents('.reviewArea').find('.comment-input').val();
+        if(userName=='0'){
+            layer.msg("请登录~");
+            return;
+        }
+        if (context.length==0){
+            layer.msg("评论内容不得为空~");
+            return;
+        }
+
+        $.ajax({
+            url:"/jjykcxh/comment/save",
+            type:"POST",
+            dataType:"json",
+            data:{
+                "userName":userName,
+                "context":context,
+                "replied_id":null,
+                "time":now,
+                "albumId":albumId,
+                "newsId":null
+            },
+            success:function (result) {
+                layer.msg(result.other.info);
+                if (result.other.info!="评论成功"){
+                    return;
+                }
+                ohtml='<div class="comment-show-con clearfix" id="'+result.other.newCid+'">' +
+                    '<div class="comment-show-con-img pull-left"><img src="/jjykcxh/static/img/user_pic.jpg" alt=""></div>' +
+                    '<div class="comment-show-con-list pull-left clearfix">' +
+                    '<div class="pl-text clearfix"><a href="javascript:;" class="comment-size-name replied_user">'+userName+'</a>:' +
+                    '<span class="my-pl-con">&nbsp;'+context+'</span></div><div class="date-dz">' +
+                    '<span class="date-dz-left pull-left comment-time">'+now+'</span>' +
+                    '<div class="date-dz-right pull-right comment-pl-block">' +
+                    '<a href="javascript:;" class="removeBlock">删除</a>' +
+                    '<a href="javascript:;" class="date-dz-pl pl-hf hf-con-block pull-left">回复</a>' +
+                    '<span class="pull-left date-dz-line">|</span>' +
+                    '<a href="javascript:;" class="date-dz-z pull-left"><i class="date-dz-z-click-red"></i>赞 (<i class="z-num">0</i>)</a>' +
+                    '</div></div><div class="hf-list-con"></div></div></div>';
+                var temp='#'+albumId;
+                $('.comment-input').val("");
+                var c_count=$(temp).find('.badge').text();
+                var c_count1=parseInt(c_count)+1;
+                $(temp).find('.badge').text(c_count1);
+                $('.comment-show').prepend(ohtml);
+            }
+        });
+    });
+
+
+    //显化评论列表
+    function setCommentModel(comments) {
+        $(".comment-show").empty();
+        $.each(comments, function (i, item) {
+            var username = item.userName;
+            var context = item.commentContext;
+            var time = item.updateTime;
+            var cid = item.commentId;
+            var replycomments = '';
+            if (item.repliedComment.length > 0) {
+                $.each(item.repliedComment, function (i1, item1) {
+                    replycomments += '<div class="hf-case"><a href="javascript:;" class="comment-size-name">'+item1.userName+'</a><span class="my-pl-con">回复@</span><a href="javascript:;" class="comment-size-name">'+username+'</a>:&nbsp;<span class="my-pl-con">'+item1.commentContext+'</span></div>'
+                });
+            }
+
+            var ocomment = '<div class="comment-show-con clearfix" id="'+cid+'">' +
+                '<div class="comment-show-con-img pull-left"><img src="/jjykcxh/static/img/user_pic.jpg" alt=""></div>' +
+                '<div class="comment-show-con-list pull-left clearfix">' +
+                '<div class="pl-text clearfix"><a href="javascript:;" class="comment-size-name replied_user">'+username+'</a>:' +
+                '<span class="my-pl-con">&nbsp;'+context+'</span></div><div class="date-dz">' +
+                '<span class="date-dz-left pull-left comment-time">'+time+'</span>' +
+                '<div class="date-dz-right pull-right comment-pl-block">' +
+                '<a href="javascript:;" class="removeBlock">删除</a>' +
+                '<a href="javascript:;" class="date-dz-pl pl-hf hf-con-block pull-left">回复</a>' +
+                '<span class="pull-left date-dz-line">|</span>' +
+                '<a href="javascript:;" class="date-dz-z pull-left"><i class="date-dz-z-click-red"></i>赞 (<i class="z-num">0</i>)</a>' +
+                '</div></div><div class="pl-text clearfix hfpl-text">' +replycomments+
+                '</div><div class="hf-list-con"></div></div></div>'
+            $('.comment-show').append(ocomment);
+        });
+
+    }
+
+
+    //点击回复，显示回复模块
+    $(document).on('click', '.pl-hf', function () {
+        //点击回复的时候判断用户是否登录，登录了才可以回复
+        if(userName=='0'){
+            layer.msg("请登录~");
+            return;
+        }
+        //var oInput = $(this).parents('.date-dz-right').parents('.date-dz').siblings('.hf-con');
+        var replied_user=$(this).parents('.date-dz-right').parents('.date-dz').parents('.comment-show-con-list').find('.replied_user').text();
+        //创建评论的回复模块
+        var fhHtml = '<div class="hf-con pull-left"> <textarea class="content comment-input hf-input" placeholder="回复@'+replied_user+'"></textarea> <a href="javascript:;" class="hf-pl">评论</a></div>';
+        //显示回复
+        if ($(this).is('.hf-con-block')) {
+            $(this).parents('.date-dz-right').parents('.date-dz').append(fhHtml);
+            $(this).removeClass('hf-con-block');
+            $('.content').flexText();
+        } else {
+            $(this).addClass('hf-con-block');
+            $(this).parents('.date-dz-right').siblings('.hf-con').remove();
+        }
+    });
+
+
+    //点击回复的评论按钮，回复信息
+    $(document).on('click', '.hf-pl', function () {
+        var myDate = new Date();
+        //获取当前年
+        var year=myDate.getFullYear();
+        //获取当前月
+        var month=myDate.getMonth()+1;
+        //获取当前日
+        var date=myDate.getDate();
+        var h=myDate.getHours();       //获取当前小时数(0-23)
+        var m=myDate.getMinutes();     //获取当前分钟数(0-59)
+        if(m<10) m = '0' + m;
+        var s=myDate.getSeconds();
+        if(s<10) s = '0' + s;
+        //评论时间
+        var now=year+'-'+month+"-"+date+" "+h+':'+m+":"+s;
+        var context = $(this).parents('.hf-con').find('.hf-input').val();
+        var replied_user = $(this).parents('.hf-con').parents('.date-dz').parents('.comment-show-con-list').find('.replied_user').text();
+        var replied_id=$(this).parents('.hf-con').parents('.date-dz').parents('.comment-show-con-list').parents('.comment-show-con').attr('id');
+
+        if (context.length == 0) {
+            layer.msg("回复内容不得为空！");
+            return;
+        }
+
+        $.ajax({
+            url:"/jjykcxh/comment/save",
+            type:"POST",
+            dataType:"json",
+            data:{
+                "userName":userName,
+                "context":context,
+                "replied_id":replied_id,
+                "time":now,
+                "albumId":albumId,
+                "newsId":null
+            },
+            success:function (result) {
+                layer.msg(result.other.info)
+            }
+        });
+
+        var ohtml = '<div class="hf-case"><a href="javascript:;" class="comment-size-name">' + userName + '</a><span class="my-pl-con">回复@</span><a href="javascript:;" class="comment-size-name">' + replied_user + '</a>:&nbsp;<span class="my-pl-con">' + context + '</span></div>';
+        $(this).parents('.hf-con').parents('.date-dz').parents('.comment-show-con-list').find('.hfpl-text').append(ohtml);
+        $(this).parents('.hf-con').parents('.date-dz').find('.date-dz-right').find('.pl-hf').addClass('hf-con-block');
+
+        var temp='#'+albumId;
+        $('.hf-input').val("");
+        var c_count=$(temp).find('.badge').text();
+        var c_count1=parseInt(c_count)+1;
+        $(temp).find('.badge').text(c_count1);
+        $(this).parents('.hf-con').remove();
+
+    });
+
+    //1点击相册名字图片显示
+    $(document).on('click','#album',function () {
+        var albumId=$(this).parents('.caption').parents('.thumbnail').attr("id");
+        $.getJSON('/jjykcxh/album/getPicsByAid/'+albumId,function (json) {
+            layer.photos({
+                photos:json
+            });
+        });
+    });
+    //1点击封面图片显示相册其它图片
+    $(document).on('click','.thumbnail img',function () {
+        var albumId=$(this).parents('.thumbnail').attr("id");
+        $.getJSON('/jjykcxh/album/getPicsByAid/'+albumId,function (json) {
+            layer.photos({
+                photos:json
+            });
+        });
+    });
+
+    var c_nums;
+    function deleteCommentById(commentId){
+
+    }
+    //删除自己的评论
+    $(document).on('click','.removeBlock',function () {
+        var c_user= $(this).parents('.comment-show-con-list').find('.replied_user').text();
+        var commentId=$(this).parents('.comment-show-con-list').parents('.comment-show-con').attr("id");
+        if(userName=='0'){
+            layer.msg("请登录~");
+            return;
+        }
+        if (userName==c_user){
+            $.ajax({
+                url:"/jjykcxh/comment/deleteCommentById",
+                data:"commentId="+commentId+"&albumId="+albumId,
+                type:"POST",
+                success:function (result) {
+                    layer.msg(result.other.info);
+                    c_nums=''+result.other.nums;
+                    var temp='#'+albumId;
+                    $(temp).find('.badge').text(c_nums);
+                }
+            });
+            $(this).parents('.comment-show-con').remove();
+        }
+        else {
+            layer.msg("不能删除别人的噢~");
+        }
+
+    });
 
 </script>
+
 </body>
 </html>

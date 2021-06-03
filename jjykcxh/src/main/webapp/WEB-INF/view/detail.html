@@ -99,9 +99,10 @@
         })
     }
     function deleteCommentById(commentId){
+        var albumId=0;
     $.ajax({
         url:"/jjykcxh/comment/deleteCommentById",
-        data:"commentId="+commentId,
+        data:"commentId="+commentId+"&albumId="+albumId,
         type:"POST",
         success:function (result) {
             layer.msg(result.other.info);
@@ -145,7 +146,16 @@
                 $.ajax({
                     url:"/jjykcxh/comment/save",
                     type:"POST",
-                    data:'now='+now+'&oSize='+oSize+'&newsId='+newsId+'&userName='+userName,
+                    dataType:"json",
+                    data:{
+                        "userName":userName,
+                        "context":oSize,
+                        "replied_id":null,
+                        "time":now,
+                        "albumId":null,
+                        "newsId":newsId
+                    },
+                    //data:'now='+now+'&oSize='+oSize+'&newsId='+newsId+'&userName='+userName,
                     success:function (result) {
                         layer.msg(result.other.info);
                         loadComment();

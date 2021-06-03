@@ -72,6 +72,22 @@
     comment_id, comment_context, update_time, album_id, replied_comment_id, news_id, 
     user_id
   </sql>
+  <select id="getCommentsByAlbumId" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+    select *
+    from comment
+    where album_id=#{albumId} and replied_comment_id is null
+    order by update_time desc ;
+  </select>
+  <select id="getReplyCommentById" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+    select *
+    from comment
+    where replied_comment_id=#{commentId}
+    order by update_time desc ;
+  </select>
+  <select id="getComment1" resultMap="BaseResultMap">
+    SELECT  * from comment ORDER BY update_time DESC LIMIT 1;
+  </select>
+
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.ljy.entity.CommentExample" >
     select
     <if test="distinct" >
@@ -92,6 +108,7 @@
     from comment
     where comment_id = #{commentId,jdbcType=INTEGER}
   </select>
+
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from comment
     where comment_id = #{commentId,jdbcType=INTEGER}
@@ -247,4 +264,7 @@
     WHERE news_id=#{id}
     order by update_time desc
   </select>
+  <delete id="deletCommentById" parameterType="java.lang.Integer">
+    delete from comment where comment_id=#{id} or replied_comment_id=#{id}
+  </delete>
 </mapper>

@@ -1,18 +1,16 @@
 package com.ljy.VO;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
-import com.ljy.entity.Comment;
 import com.ljy.entity.Pic;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class AlbumVO {
     private Integer albumId;
 
     private String albumName;
 
-    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss",timezone="UTC")
-    private Date updateTime;
+    private String updateTime;
 
     private String authorName;
 
@@ -28,9 +26,8 @@ public class AlbumVO {
 
     private List<Pic> pics=new ArrayList<>();
 
-//    private List<Comment> comments=new ArrayList<>();
 
-    public List<Pic> getPics() {
+   public List<Pic> getPics() {
         return pics;
     }
 
@@ -54,11 +51,11 @@ public class AlbumVO {
         this.albumName = albumName;
     }
 
-    public Date getUpdateTime() {
+    public String getUpdateTime() {
         return updateTime;
     }
 
-    public void setUpdateTime(Date updateTime) {
+    public void setUpdateTime(String updateTime) {
         this.updateTime = updateTime;
     }
 

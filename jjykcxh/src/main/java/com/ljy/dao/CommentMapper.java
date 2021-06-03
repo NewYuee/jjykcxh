@@ -31,4 +31,14 @@ public interface CommentMapper {
     int updateByPrimaryKeySelective(Comment record);
 
     int updateByPrimaryKey(Comment record);
+
+    //得到评论，但不包括包含回复的
+    List<Comment> getCommentsByAlbumId(Integer albumId);
+
+    //得到指定id的回复的评论
+    List<Comment> getReplyCommentById(Integer commentId);
+
+    Comment getComment1();
+
+    void deletCommentById(Integer id);
 }

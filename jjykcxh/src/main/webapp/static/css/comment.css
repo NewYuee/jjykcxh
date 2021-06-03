@@ -1,3 +1,7 @@
+ul{padding: 0;margin: 0;}
+li{list-style: none;}
+a{text-decoration: none;}
+img{outline: none;border: 0;}
 
 /*清除浮动*/
 .clearfix:before,

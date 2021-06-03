@@ -7,4 +7,5 @@ import java.util.List;
 
 public interface AlbumService {
     List<AlbumVO> getAlbums();
+    Album getAlbumById(Integer albumId);
 }
