@@ -14,10 +14,6 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     UserMapper userMapper;
-    @Override
-    public boolean del(int id) {
-        return false;
-    }
 
     @Override
     public User selectOne(User user) {
@@ -42,5 +38,26 @@ public class UserServiceImpl implements UserService {
     public User getUserById(Integer id) {
         User user = userMapper.selectByPrimaryKey(id);
         return user;
+    }
+
+    @Override
+    public List<User> getAll() {
+        List<User> list = userMapper.selectByExample(null);
+        return list;
+    }
+
+    @Override
+    public int getCount() {
+        return userMapper.countByExample(null);
+    }
+
+    @Override
+    public int updateById(User user) {
+        return userMapper.updateByPrimaryKey(user);
+    }
+
+    @Override
+    public int deleteById(Integer id) {
+        return userMapper.deleteByPrimaryKey(id);
     }
 }

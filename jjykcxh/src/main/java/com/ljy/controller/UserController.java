@@ -4,21 +4,14 @@ import com.ljy.entity.Msg;
 import com.ljy.entity.User;
 import com.ljy.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.net.URI;
 import java.util.List;
 
-//import javax.annotation.Resource;
 
 @Controller
 public class UserController {
@@ -65,5 +58,31 @@ public class UserController {
     public String logout(HttpSession session){
         session.removeAttribute("userInfo");
         return "/index";
+    }
+
+    @RequestMapping("/user/getAlloo")
+    @ResponseBody
+    public Msg getAllUser(){
+        List<User> list= userService.getAll();
+        int count=userService.getCount();
+        return Msg.success().add("users",list).add("count",count);
+    }
+
+    @PostMapping("/user/update/{id}")
+    @ResponseBody
+    public Msg updateUserInfo(@PathVariable("id")Integer id, User user){
+        user.setUserId(id);
+        int i = userService.updateById(user);
+        if (i!=0){
+            return Msg.success();
+        }
+        return Msg.fail();
+    }
+
+    @PostMapping("/user/deleteById")
+    @ResponseBody
+    public Msg deleteById(@RequestParam("id") Integer id){
+        int i = userService.deleteById(id);
+        return Msg.success();
     }
 }

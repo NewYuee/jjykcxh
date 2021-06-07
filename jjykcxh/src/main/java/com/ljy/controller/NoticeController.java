@@ -49,12 +49,7 @@ public class NoticeController {
         return Msg.success().add("pageInfo",pageInfo);
     }
 
-/*    @RequestMapping("/more")
-    public void getParam(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        String id = request.getParameter("id");
-        System.out.println(id);
-        response.sendRedirect("/jjykcxh/news.html");
-    }*/
+
 
     @RequestMapping("/detail")
     //get通知详情，返还界面

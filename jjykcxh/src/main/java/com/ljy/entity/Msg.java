@@ -33,7 +33,7 @@ public class Msg {
 
     public static Msg fail(){
         Msg result=new Msg();
-        result.setCode(202);
+        result.setCode(400);
         result.setMsg("处理失败！");
         return result;
     }

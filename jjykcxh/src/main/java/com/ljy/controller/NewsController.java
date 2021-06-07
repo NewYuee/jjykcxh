@@ -14,16 +14,15 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Controller
@@ -42,14 +41,13 @@ public class NewsController {
     @ResponseBody
     public Msg getNews(){
         List<News> list=newsService.getNews();
-        return Msg.success().add("news",list);
+        int count=newsService.getNewsCount();
+        return Msg.success().add("news",list).add("count",count);
     }
 
 
     @RequestMapping("/detail")
     public ModelAndView toDetailPage(HttpServletRequest request){
-
-
         String newsId =request.getParameter("newsId");
         News news=null;
         //检验是否为符合要求的参数
@@ -99,6 +97,54 @@ public class NewsController {
         List<News> list=newsService.getNews();
         PageInfo pageInfo=new PageInfo(list,4);
         return Msg.success().add("pageInfo",pageInfo);
+    }
+
+    @PostMapping("/deleteById")
+    @ResponseBody
+    public Msg deleteNewsById(@RequestParam("newsId") Integer id){
+        int i = newsService.deleteById(id);
+        if (i!=0){
+            return Msg.success();
+        }
+        return Msg.fail();
+    }
+
+    @PostMapping("/update/{id}")
+    @ResponseBody
+    public Msg updateNews(@PathVariable("id") Integer id ,News news) throws ParseException {
+        Date date=new Date();
+        if (news.getNewsContext()==null||news.getNewsTitle()==null||news.getAuthorName()==null){
+            return Msg.fail();
+        }
+        SimpleDateFormat df=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        String format = df.format(date);
+        Date time=df.parse(format);
+        news.setNewsId(id);
+        news.setUpdateTime(time);
+        int i=newsService.updateById(news);
+        System.out.println(news.getNewsContext());
+        if (i!=0){
+        return Msg.success();
+        }
+        return Msg.fail();
+    }
+
+    @PostMapping("/insertOne")
+    @ResponseBody
+    public Msg insertOne(News news) throws ParseException {
+        if (news.getNewsContext()==null||news.getNewsTitle()==null||news.getAuthorName()==null){
+            return Msg.fail();
+        }
+        Date date=new Date();
+        SimpleDateFormat df=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        String format = df.format(date);
+        Date time=df.parse(format);
+        news.setUpdateTime(time);
+        int i= newsService.insertOne(news);
+        if (i!=0){
+            return Msg.success();
+        }
+        return Msg.fail();
     }
 
 }

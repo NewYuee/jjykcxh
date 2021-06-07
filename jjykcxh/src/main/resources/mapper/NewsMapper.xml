@@ -204,16 +204,6 @@
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByExample" parameterType="map" >
-    update news
-    set news_id = #{record.newsId,jdbcType=INTEGER},
-      news_title = #{record.newsTitle,jdbcType=VARCHAR},
-      author_name = #{record.authorName,jdbcType=VARCHAR},
-      update_time = #{record.updateTime,jdbcType=TIMESTAMP}
-    <if test="_parameter != null" >
-      <include refid="Update_By_Example_Where_Clause" />
-    </if>
-  </update>
   <update id="updateByPrimaryKeySelective" parameterType="com.ljy.entity.News" >
     update news
     <set >

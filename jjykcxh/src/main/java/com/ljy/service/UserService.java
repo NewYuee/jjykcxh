@@ -6,9 +6,16 @@ import java.util.List;
 
 public interface UserService {
     
-    boolean del(int id);
     User selectOne(User user);
     int insertOne(User user);
     List<User> selectByUserName(String username);
     User getUserById(Integer id);
+
+    List<User> getAll();
+
+    int getCount();
+
+    int updateById(User user);
+
+    int deleteById(Integer id);
 }

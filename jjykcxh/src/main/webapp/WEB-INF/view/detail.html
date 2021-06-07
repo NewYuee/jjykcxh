@@ -24,13 +24,13 @@
         <br><br>
         <div>
             <div th:text="'作者:'+${news.authorName}"></div>
-            <span th:text="'发布时间:'+${updateTime}"></span>
+            <span th:text="'更新时间:'+${updateTime}"></span>
         </div>
         <br><br>
         <div class="gap"></div>
         <h2 style="text-align: center;" th:text="${news.newsTitle}"></h2><br><br>
         <br>
-        <div id="news_conent" th:text="${news.newsContext}"></div>
+        <div id="news_conent" th:utext="${news.newsContext}"></div>
         <div class="gap"></div>
         <div class="gap"></div>
         <div class="gap"></div>

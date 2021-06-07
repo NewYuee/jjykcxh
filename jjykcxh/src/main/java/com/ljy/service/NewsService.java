@@ -9,4 +9,12 @@ public interface NewsService {
     List<News> getNews();
 
     News getNewsById(Integer id);
+
+    int getNewsCount();
+
+    int deleteById(Integer id);
+
+    int updateById(News news);
+
+    int insertOne(News news);
 }

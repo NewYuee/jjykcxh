@@ -24,4 +24,25 @@ public class NewsServiceImpl implements NewsService {
     public News getNewsById(Integer id) {
         return newsMapper.selectByPrimaryKey(id);
     }
+
+    @Override
+    public int getNewsCount() {
+        return newsMapper.countByExample(null);
+    }
+
+    @Override
+    public int deleteById(Integer id) {
+        return newsMapper.deleteByPrimaryKey(id);
+    }
+
+    @Override
+    public int updateById(News news) {
+        return newsMapper.updateByPrimaryKeyWithBLOBs(news);
+    }
+
+    @Override
+    public int insertOne(News news) {
+        int insert = newsMapper.insert(news);
+        return insert;
+    }
 }
