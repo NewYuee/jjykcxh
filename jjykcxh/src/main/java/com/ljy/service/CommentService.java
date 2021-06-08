@@ -22,4 +22,8 @@ public interface CommentService {
     Comment getComment1();
 
     int getCountByAid(Integer albumId);
+
+    int getCommentCount();
+
+    List<Comment> getCommentsByKeyWord(String keyword);
 }

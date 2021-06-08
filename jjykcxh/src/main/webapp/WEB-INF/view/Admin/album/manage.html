@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>交际与口才协会后台管理——新闻管理</title>
+    <title>交际与口才协会后台管理——相册管理</title>
     <th:block th:include="Admin/common.html :: source"></th:block>
 </head>
 <body>
@@ -20,7 +20,7 @@
                         <dd><a href="/jjykcxh/admin/user/manageuser">管理用户</a></dd>
                     </dl>
                 </li>
-                <li class="layui-nav-item layui-nav-itemed">
+                <li class="layui-nav-item">
                     <a href="javascript:;">新闻管理</a>
                     <dl class="layui-nav-child">
                         <dd><a href="/jjykcxh/admin/news/edit">发布新闻</a></dd>
@@ -40,7 +40,7 @@
                         <dd><a href="/jjykcxh/admin/comment/manage">管理评论</a></dd>
                     </dl>
                 </li>
-                <li class="layui-nav-item">
+                <li class="layui-nav-item layui-nav-itemed">
                     <a href="javascript:;">相册管理</a>
                     <dl class="layui-nav-child">
                         <dd><a href="/jjykcxh/admin/album/create">新建相册</a></dd>
@@ -57,7 +57,7 @@
         <!-- 内容主体区域 -->
         <div class="research layui-inline">
             <div class="layui-inline">
-                <input class="layui-input" name="keyword" placeholder="根据标题进行搜索" id="demoReload" autocomplete="off">
+                <input class="layui-input" name="keyword" placeholder="根据标题搜索" id="demoReload" autocomplete="off">
             </div>
             <button class="layui-btn layui-btn-sm search" data-type="reload">搜索</button>
         </div>
@@ -102,7 +102,6 @@
 </script>
 
 <script type="text/html" id="barDemo">
-    <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="detail">查看</a>
     <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
     <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
 </script>
@@ -110,10 +109,9 @@
 <script>
     layui.use('table', function () {
         var table = layui.table;
-
         table.render({
             elem: '#test'
-            , url: '/jjykcxh/news/getAll'
+            , url: '/jjykcxh/album/getAll'
             , page: false
             , id:'testReload'
             , height: 760
@@ -128,11 +126,10 @@
             , cols: [
                 [
                     {type: 'checkbox', fixed: 'left'}
-                    , {field: 'newsId', title: 'ID', sort: true}
-                    , {field: 'newsTitle', title: '标题',}
-                    , {field: 'authorName', title: '作者', sort: true}
+                    , {field: 'albumId', title: 'ID', sort: true}
+                    , {field: 'albumName', title: '相册名',}
                     , {field: 'updateTime', title: '更新时间'}
-                    , {field: 'newsContext', title: '内容'}
+                    , {field: 'authorName', title: '创建人'}
                     , {fixed: 'right', align: 'center', toolbar: '#barDemo'}
                 ]
             ]
@@ -141,10 +138,9 @@
                     "code": 0,
                     "msg": res.msg,
                     "count": res.other.count,
-                    "data": res.other.news
+                    "data": res.other.albums
                 };
             }
-
         });
 
         //搜索框
@@ -199,8 +195,8 @@
             if (obj.event === 'del') {
                 layer.confirm('真的删除本条数据吗', function (index) {
                     $.ajax({
-                        url: "/jjykcxh/news/deleteById",
-                        data: "newsId=" + data.newsId,
+                        url: "/jjykcxh/album/deleteById",
+                        data: "id=" + data.albumId,
                         type: "POST",
                         success: function (result) {
                             if (result.code == 200) {
@@ -217,29 +213,22 @@
                 layer.open({
                     type: 1,
                     skin: 'layui-layer-rim', //加上边框
-                    area: ['800px', '450px'], //宽高
+                    area: ['500px', '220px'], //宽高
                     content: '<form class="layui-form" action="">' +
-                        '<div class="layui-form-item"><label class="layui-form-label">标题</label><div class="layui-input-block">' +
-                        '<input type="text" name="newsTitle" required  lay-verify="required" placeholder="标题" autocomplete="off" value="' + data.newsTitle + '" class="layui-input"></div></div>' +
-                        '<div class="layui-form-item">' +
-                        '<label class="layui-form-label">作者</label><div class="layui-input-block"><input type="text" name="authorName" required  lay-verify="required" placeholder="作者" autocomplete="off" value="' + data.authorName + '" class="layui-input"></div></div>' +
-                        '<div class="layui-form-item layui-form-text"><label class="layui-form-label">内容</label><textarea name="newsContext" id="textarea" style="display: none;" >' + data.newsContext + '</textarea></div>' +
+                        '<div class="layui-form-item"><label class="layui-form-label">相册名</label><div class="layui-input-block">' +
+                        '<input type="text" name="albumName" required  lay-verify="required" placeholder="相册名" autocomplete="off" value="' + data.albumName + '" class="layui-input"></div></div>' +
+                        '<div class="layui-form-item"><label class="layui-form-label">创建人</label><div class="layui-input-block"><input type="text" name="authorName" required  lay-verify="required" placeholder="创建人" autocomplete="off" value="' + data.authorName + '" class="layui-input"></div></div>' +
                         '<div class="layui-form-item"><div class="layui-input-block">' +
                         '<button class="layui-btn" lay-submit lay-filter="formDemo">立即提交</button>\n' +
                         '<button type="reset" class="layui-btn layui-btn-primary">重置</button>\n' +
                         '</div></div></form>'
                 });
-                //富文本编辑框
-                layui.use('layedit', function () {
-                    var layedit = layui.layedit;
-                    var index = layedit.build('textarea'); //建立编辑器
                     layui.use('form', function () {
                         var form = layui.form;
                         //监听提交
                         form.on('submit(formDemo)', function (data1) {
-                            layedit.sync(index);
                             $.ajax({
-                                url: "/jjykcxh/news/update/" + data.newsId,
+                                url: "/jjykcxh/album/update/" + data.albumId,
                                 type: "POST",
                                 data: $('.layui-form').serialize(),
                                 success: function (result) {
@@ -250,15 +239,6 @@
                             return false;
                         });
                     });
-                });
-            }else if(obj.event === 'detail'){
-                layer.open({
-                    type: 1,
-                    title:'新闻详情',
-                    skin: 'layui-layer-rim', //加上边框
-                    area: ['600px', '400px'], //宽高
-                    content: data.newsContext
-                });
             }
         });
     });
@@ -279,9 +259,5 @@
 
 </script>
 
-
-<script>
-
-</script>
 </body>
 </html>

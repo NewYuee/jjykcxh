@@ -2,6 +2,7 @@ package com.ljy.service.impl;
 
 import com.ljy.dao.NewsMapper;
 import com.ljy.entity.News;
+import com.ljy.entity.NewsExample;
 import com.ljy.service.NewsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -44,5 +45,13 @@ public class NewsServiceImpl implements NewsService {
     public int insertOne(News news) {
         int insert = newsMapper.insert(news);
         return insert;
+    }
+
+    @Override
+    public List<News> getNewsByKeyWord(String k) {
+        NewsExample example=new NewsExample();
+        NewsExample.Criteria criteria = example.createCriteria();
+        criteria.andNewsTitleLike(k);
+        return newsMapper.selectByExample(example);
     }
 }

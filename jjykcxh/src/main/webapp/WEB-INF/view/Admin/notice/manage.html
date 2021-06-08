@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>交际与口才协会后台管理——新闻管理</title>
+    <title>交际与口才协会后台管理——通知管理</title>
     <th:block th:include="Admin/common.html :: source"></th:block>
 </head>
 <body>
@@ -20,14 +20,14 @@
                         <dd><a href="/jjykcxh/admin/user/manageuser">管理用户</a></dd>
                     </dl>
                 </li>
-                <li class="layui-nav-item layui-nav-itemed">
+                <li class="layui-nav-item">
                     <a href="javascript:;">新闻管理</a>
                     <dl class="layui-nav-child">
                         <dd><a href="/jjykcxh/admin/news/edit">发布新闻</a></dd>
                         <dd><a href="/jjykcxh/admin/news/manage">管理新闻</a></dd>
                     </dl>
                 </li>
-                <li class="layui-nav-item">
+                <li class="layui-nav-item layui-nav-itemed">
                     <a href="javascript:;">通知管理</a>
                     <dl class="layui-nav-child">
                         <dd><a href="/jjykcxh/admin/notice/edit">新增通知</a></dd>
@@ -113,10 +113,10 @@
 
         table.render({
             elem: '#test'
-            , url: '/jjykcxh/news/getAll'
+            , url: '/jjykcxh/notice/getAll'
             , page: false
-            , id:'testReload'
             , height: 760
+            , id:'testReload'
             , toolbar: '#toolbarDemo' //开启头部工具栏，并为其绑定左侧模板
             , defaultToolbar: ['filter', 'exports', 'print', { //自定义头部工具栏右侧图标。如无需自定义，去除该参数即可
                 title: '提示'
@@ -128,11 +128,10 @@
             , cols: [
                 [
                     {type: 'checkbox', fixed: 'left'}
-                    , {field: 'newsId', title: 'ID', sort: true}
-                    , {field: 'newsTitle', title: '标题',}
-                    , {field: 'authorName', title: '作者', sort: true}
+                    , {field: 'noticeId', title: 'ID', sort: true}
+                    , {field: 'noticeTitle', title: '标题',}
                     , {field: 'updateTime', title: '更新时间'}
-                    , {field: 'newsContext', title: '内容'}
+                    , {field: 'noticeContext', title: '内容'}
                     , {fixed: 'right', align: 'center', toolbar: '#barDemo'}
                 ]
             ]
@@ -141,7 +140,7 @@
                     "code": 0,
                     "msg": res.msg,
                     "count": res.other.count,
-                    "data": res.other.news
+                    "data": res.other.notices
                 };
             }
 
@@ -199,8 +198,8 @@
             if (obj.event === 'del') {
                 layer.confirm('真的删除本条数据吗', function (index) {
                     $.ajax({
-                        url: "/jjykcxh/news/deleteById",
-                        data: "newsId=" + data.newsId,
+                        url: "/jjykcxh/notice/deleteById",
+                        data: "id=" + data.noticeId,
                         type: "POST",
                         success: function (result) {
                             if (result.code == 200) {
@@ -220,14 +219,14 @@
                     area: ['800px', '450px'], //宽高
                     content: '<form class="layui-form" action="">' +
                         '<div class="layui-form-item"><label class="layui-form-label">标题</label><div class="layui-input-block">' +
-                        '<input type="text" name="newsTitle" required  lay-verify="required" placeholder="标题" autocomplete="off" value="' + data.newsTitle + '" class="layui-input"></div></div>' +
+                        '<input type="text" name="noticeTitle" required  lay-verify="required" placeholder="标题" autocomplete="off" value="' + data.noticeTitle + '" class="layui-input"></div></div>' +
+                        '<div class="layui-form-item layui-form-text"><label class="layui-form-label">内容</label><textarea name="noticeContext" id="textarea" style="display: none;" >' + data.noticeContext + '</textarea></div>' +
                         '<div class="layui-form-item">' +
-                        '<label class="layui-form-label">作者</label><div class="layui-input-block"><input type="text" name="authorName" required  lay-verify="required" placeholder="作者" autocomplete="off" value="' + data.authorName + '" class="layui-input"></div></div>' +
-                        '<div class="layui-form-item layui-form-text"><label class="layui-form-label">内容</label><textarea name="newsContext" id="textarea" style="display: none;" >' + data.newsContext + '</textarea></div>' +
-                        '<div class="layui-form-item"><div class="layui-input-block">' +
+                        '<div class="layui-input-block">' +
                         '<button class="layui-btn" lay-submit lay-filter="formDemo">立即提交</button>\n' +
                         '<button type="reset" class="layui-btn layui-btn-primary">重置</button>\n' +
-                        '</div></div></form>'
+                        '</div></div>' +
+                        '</form>'
                 });
                 //富文本编辑框
                 layui.use('layedit', function () {
@@ -239,7 +238,7 @@
                         form.on('submit(formDemo)', function (data1) {
                             layedit.sync(index);
                             $.ajax({
-                                url: "/jjykcxh/news/update/" + data.newsId,
+                                url: "/jjykcxh/notice/update/" + data.noticeId,
                                 type: "POST",
                                 data: $('.layui-form').serialize(),
                                 success: function (result) {
@@ -254,10 +253,10 @@
             }else if(obj.event === 'detail'){
                 layer.open({
                     type: 1,
-                    title:'新闻详情',
+                    title:'通知详情',
                     skin: 'layui-layer-rim', //加上边框
                     area: ['600px', '400px'], //宽高
-                    content: data.newsContext
+                    content: data.noticeContext
                 });
             }
         });
@@ -279,9 +278,5 @@
 
 </script>
 
-
-<script>
-
-</script>
 </body>
 </html>

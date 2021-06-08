@@ -2,6 +2,7 @@ package com.ljy.service.impl;
 
 import com.ljy.dao.NoticeMapper;
 import com.ljy.entity.Notice;
+import com.ljy.entity.NoticeExample;
 import com.ljy.service.NoticeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -21,5 +22,28 @@ public class NoticeServiceImpl implements NoticeService {
     @Override
     public Notice getNoticeById(Integer id) {
         return noticeMapper.selectByPrimaryKey(id);
+    }
+
+    @Override
+    public int deleteById(Integer id) {
+        return noticeMapper.deleteByPrimaryKey(id);
+    }
+
+    @Override
+    public int updateById(Notice notice) {
+        return noticeMapper.updateByPrimaryKey(notice);
+    }
+
+    @Override
+    public int insertOne(Notice notice) {
+        return noticeMapper.insert(notice);
+    }
+
+    @Override
+    public List<Notice> getNewsByKeyWord(String k) {
+        NoticeExample example=new NoticeExample();
+        NoticeExample.Criteria criteria = example.createCriteria();
+        criteria.andNoticeTitleLike(k);
+        return noticeMapper.selectByExample(example);
     }
 }

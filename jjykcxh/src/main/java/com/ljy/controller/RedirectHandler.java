@@ -17,6 +17,11 @@ public class RedirectHandler {
         return "index";
     }
 
+    @GetMapping("/admin/index")
+    public String red(){
+        return "Admin/index";
+    }
+
     @GetMapping("/admin/{class}/{item}")
     public String doMain(@PathVariable("class") String sc,@PathVariable("item") String item){
         String surl="Admin/"+sc+"/"+item;

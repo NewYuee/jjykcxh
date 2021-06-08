@@ -39,7 +39,12 @@ public class NewsController {
 
     @RequestMapping("/getAll")
     @ResponseBody
-    public Msg getNews(){
+    public Msg getNews(HttpServletRequest request){
+        if(request.getParameter("keyword")!=null){
+            String k="%"+request.getParameter("keyword")+"%";
+            List<News> newsList=newsService.getNewsByKeyWord(k);
+            return Msg.success().add("news",newsList).add("count",newsList.size());
+        }
         List<News> list=newsService.getNews();
         int count=newsService.getNewsCount();
         return Msg.success().add("news",list).add("count",count);
@@ -48,6 +53,8 @@ public class NewsController {
 
     @RequestMapping("/detail")
     public ModelAndView toDetailPage(HttpServletRequest request){
+
+
         String newsId =request.getParameter("newsId");
         News news=null;
         //检验是否为符合要求的参数

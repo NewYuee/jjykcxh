@@ -17,4 +17,6 @@ public interface NewsService {
     int updateById(News news);
 
     int insertOne(News news);
+
+    List<News> getNewsByKeyWord(String k);
 }

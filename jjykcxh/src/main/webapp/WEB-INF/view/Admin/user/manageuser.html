@@ -2,35 +2,13 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>交际与口才协会后台管理——新闻管理</title>
-    <link rel="icon" href="/jjykcxh/static/img/favicon.ico" type="images/x-ico"/>
-    <link rel="stylesheet" href="/jjykcxh/static/layui/css/layui.css" media="all">
+    <title>交际与口才协会后台管理——用户管理</title>
+    <th:block th:include="Admin/common.html :: source"></th:block>
 </head>
 <body>
 
 <div class="layui-layout layui-layout-admin">
-    <div class="layui-header">
-        <div class="layui-logo layui-hide-xs layui-bg-black">交协后台</div>
-        <!-- 头部区域（可配合layui 已有的水平导航） -->
-        <ul class="layui-nav layui-layout-right">
-            <li class="layui-nav-item layui-hide layui-show-md-inline-block">
-                <a href="javascript:;">
-                    <img src="/jjykcxh/static/img/user_pic.jpg" class="layui-nav-img">
-                    NewYue
-                </a>
-                <dl class="layui-nav-child">
-                    <dd><a href="">你的信息</a></dd>
-                    <dd><a href=""> 设 置 </a></dd>
-                    <dd><a href=""> 注 销 </a></dd>
-                </dl>
-            </li>
-            <li class="layui-nav-item" lay-header-event="menuRight" lay-unselect>
-                <a href="javascript:;">
-                    <i class="layui-icon layui-icon-more-vertical"></i>
-                </a>
-            </li>
-        </ul>
-    </div>
+    <th:block th:include="Admin/common.html :: top"></th:block>
 
     <div class="layui-side layui-bg-black">
         <div class="layui-side-scroll">
@@ -59,16 +37,16 @@
                 <li class="layui-nav-item">
                     <a href="javascript:;">评论管理</a>
                     <dl class="layui-nav-child">
-                        <dd><a href="javascript:;">管理评论</a></dd>
+                        <dd><a href="/jjykcxh/admin/comment/manage">管理评论</a></dd>
                     </dl>
                 </li>
                 <li class="layui-nav-item">
                     <a href="javascript:;">相册管理</a>
                     <dl class="layui-nav-child">
-                        <dd><a href="javascript:;">新建相册</a></dd>
-                        <dd><a href="javascript:;">管理相册</a></dd>
-                        <dd><a href="javascript:;">上传图片</a></dd>
-                        <dd><a href="javascript:;">管理图片</a></dd>
+                        <dd><a href="/jjykcxh/admin/album/create">新建相册</a></dd>
+                        <dd><a href="/jjykcxh/admin/album/manage">管理相册</a></dd>
+                        <dd><a href="/jjykcxh/admin/album/uploadpic">上传图片</a></dd>
+                        <dd><a href="/jjykcxh/admin/album/picmanage">管理图片</a></dd>
                     </dl>
                 </li>
             </ul>
@@ -81,14 +59,10 @@
         <table class="layui-hide" id="test" lay-filter="test"></table>
     </div>
 
-    <div class="layui-footer">
-        <!-- 底部固定区域 -->
-        版权所有©2019-2021 @成都大学交际与口才协会
-    </div>
+    <th:block th:include="Admin/common.html :: footer"></th:block>
 </div>
 
-<script src="https://libs.baidu.com/jquery/2.1.4/jquery.min.js"></script>
-<script src="/jjykcxh/static/layui/layui.js" charset="utf-8"></script>
+<th:block th:include="Admin/common.html :: js"></th:block>
 <script>
     layui.use(['element', 'layer', 'util'], function () {
         var element = layui.element
@@ -212,6 +186,10 @@
                     });
                 });
             } else if (obj.event === 'edit') {
+                var checkinput='<input type="radio" name="userGender" value="男" title="男" checked=""><input type="radio" name="userGender" value="女" title="女">';
+                if(data.userGender=='女'){
+                    checkinput='<input type="radio" name="userGender" value="男" title="男" ><input type="radio" name="userGender" value="女" title="女" checked="">';
+                }
                 layer.open({
                     type: 1,
                     skin: 'layui-layer-rim', //加上边框
@@ -222,8 +200,7 @@
                         '<div class="layui-form-item">' +
                         '<label class="layui-form-label">密码</label><div class="layui-input-block"><input type="text" name="userPwd" required  lay-verify="required" placeholder="密码" autocomplete="off" value="' + data.userPwd + '" class="layui-input"></div></div>' +
                         '<div class="layui-form-item layui-form-text"><label class="layui-form-label">性别</label><div class="layui-input-block">' +
-                        '<input type="radio" name="userGender" value="男" title="男" checked="">' +
-                        '<input type="radio" name="userGender" value="女" title="女"></div></div>' +
+                        checkinput+'</div></div>' +
                         '<div class="layui-form-item layui-form-text"><label class="layui-form-label">身份码</label><div class="layui-input-block">' +
                         '<input type="radio" name="userIdentity" value="0" title="普通用户" checked="">' +
                         '<input type="radio" name="userIdentity" value="1" title="管理员"></div></div>' +
@@ -269,11 +246,6 @@
         });
     });
 
-
-</script>
-
-
-<script>
 
 </script>
 </body>

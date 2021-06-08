@@ -89,4 +89,17 @@ public class CommentServiceImpl implements CommentService{
         criteria.andAlbumIdEqualTo(albumId);
         return commentMapper.countByExample(example);
     }
+
+    @Override
+    public int getCommentCount() {
+        return commentMapper.countByExample(null);
+    }
+
+    @Override
+    public List<Comment> getCommentsByKeyWord(String keyword) {
+        CommentExample example=new CommentExample();
+        CommentExample.Criteria criteria = example.createCriteria();
+        criteria.andCommentContextLike(keyword);
+        return commentMapper.selectByExample(example);
+    }
 }

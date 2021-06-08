@@ -106,10 +106,18 @@
             url: "/jjykcxh/album/getAll",
             type: "GET",
             success: function (result) {
+                var firstpicname;
                 var albums = result.other.albums;
                 var s = '';
-                $.each(albums, function (i, item) {
-                    s += '<div class="photos"><div class="polaroid"><a target="_blank" href="#"><img src="http://120.78.196.234/resource/jjykcxh/album/' + item.pics[0].picName+'"></a><div class="desc">' + item.albumName + '</div></div></div>';
+                $.each(albums, function (index, item) {
+                    console.log("iindex=======>"+index);
+                    if(index>=4){
+                        return;
+                    };
+                    var c_nums = item.c_count;
+                    if(c_nums==0){firstpicname='mark.jpg'}
+                    else{firstpicname= item.pics[0].picName;};
+                    s += '<div class="photos"><div class="polaroid"><a target="_blank" href="/jjykcxh/album/index#'+item.albumId+'"><img src="http://120.78.196.234/resource/jjykcxh/album/' + firstpicname+'"></a><div class="desc">' + item.albumName + '</div></div></div>';
                 });
                 $("#right_column").html(s);
             }

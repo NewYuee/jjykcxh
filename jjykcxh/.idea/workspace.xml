@@ -7,25 +7,41 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="9f393bf3-668c-410b-977d-c95bd9d5b38e" name="Default Changelist" comment="update code">
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/ljy/controller/AdminController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/view/Admin/a_common.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/view/Admin/index.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/view/Admin/news/edit.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/view/Admin/news/manage.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/view/Admin/user/manageuser.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/ljy/controller/PicController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/view/Admin/album/create.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/view/Admin/album/manage.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/view/Admin/album/picmanage.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/view/Admin/album/uploadpic.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/view/Admin/comment/manage.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/view/Admin/common.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/view/Admin/notice/edit.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/view/Admin/notice/manage.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/ljy/controller/AlbumController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ljy/controller/AlbumController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/ljy/controller/CommentController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ljy/controller/CommentController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/ljy/controller/NewsController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ljy/controller/NewsController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/ljy/controller/NoticeController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ljy/controller/NoticeController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/ljy/controller/RedirectHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ljy/controller/RedirectHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/ljy/controller/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ljy/controller/UserController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/ljy/entity/Msg.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ljy/entity/Msg.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/ljy/service/AlbumService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ljy/service/AlbumService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/ljy/service/CommentService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ljy/service/CommentService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/ljy/service/NewsService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ljy/service/NewsService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/ljy/service/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ljy/service/UserService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/ljy/service/NoticeService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ljy/service/NoticeService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/ljy/service/PicService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ljy/service/PicService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/ljy/service/impl/AlbumServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ljy/service/impl/AlbumServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/ljy/service/impl/CommentServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ljy/service/impl/CommentServiceImpl.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/ljy/service/impl/NewsServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ljy/service/impl/NewsServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/ljy/service/impl/UserServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ljy/service/impl/UserServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/mapper/NewsMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/mapper/NewsMapper.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/view/detail.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/view/detail.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/com/ljy/controller/UserControllerTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/ljy/controller/UserControllerTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/ljy/service/impl/NoticeServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ljy/service/impl/NoticeServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/ljy/service/impl/PicServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ljy/service/impl/PicServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/mapper/NoticeMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/mapper/NoticeMapper.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/view/Admin/a_common.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/view/Admin/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/view/Admin/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/view/Admin/news/edit.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/view/Admin/news/edit.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/view/Admin/news/manage.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/view/Admin/news/manage.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/view/Admin/user/manageuser.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/view/Admin/user/manageuser.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/view/albums.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/view/albums.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/view/common.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/view/common.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/view/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/view/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/static/css/menu.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/static/css/menu.css" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -54,8 +70,8 @@
         <option value="Jsp File" />
         <option value="Arquillian JUnit Test Class" />
         <option value="Interface" />
-        <option value="Class" />
         <option value="HTML File" />
+        <option value="Class" />
       </list>
     </option>
   </component>
@@ -248,7 +264,7 @@
     <option name="viewStates">
       <list>
         <serviceView>
-          <option name="contentProportion" value="0.17489271" />
+          <option name="contentProportion" value="0.11895497" />
           <treeState>
             <expand>
               <path>
@@ -258,7 +274,7 @@
               <path>
                 <item name="services root" type="e789fda9:ObjectUtils$Sentinel" />
                 <item name="Tomcat Server" type="7427dc5b:ServiceModel$ServiceGroupNode" />
-                <item name="Running" type="7427dc5b:ServiceModel$ServiceGroupNode" />
+                <item name="Finished" type="7427dc5b:ServiceModel$ServiceGroupNode" />
               </path>
             </expand>
             <select />
@@ -324,7 +340,10 @@
       <workItem from="1622867137076" duration="1242000" />
       <workItem from="1622959807738" duration="15600000" />
       <workItem from="1623033307832" duration="9373000" />
-      <workItem from="1623062788717" duration="13378000" />
+      <workItem from="1623062788717" duration="14336000" />
+      <workItem from="1623120871267" duration="4492000" />
+      <workItem from="1623131573689" duration="8000" />
+      <workItem from="1623131602981" duration="31580000" />
     </task>
     <servers />
   </component>
@@ -340,10 +359,10 @@
       <screen x="0" y="0" width="1920" height="1050" />
     </state>
     <state x="677" y="171" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1920.1050@0.0.1920.1050" timestamp="1621507593269" />
-    <state x="1153" y="251" key="#com.intellij.ide.util.MemberChooser" timestamp="1623075397664">
+    <state x="1153" y="251" key="#com.intellij.ide.util.MemberChooser" timestamp="1623164959472">
       <screen x="0" y="0" width="1920" height="1050" />
     </state>
-    <state x="1153" y="251" key="#com.intellij.ide.util.MemberChooser/0.0.1920.1050@0.0.1920.1050" timestamp="1623075397664" />
+    <state x="1153" y="251" key="#com.intellij.ide.util.MemberChooser/0.0.1920.1050@0.0.1920.1050" timestamp="1623164959472" />
     <state x="1191" y="467" width="431" height="272" key="#com.intellij.refactoring.move.moveClassesOrPackages.MoveClassesOrPackagesDialog.classes" timestamp="1621609611312">
       <screen x="0" y="0" width="1920" height="1050" />
     </state>
@@ -360,54 +379,54 @@
       <screen x="0" y="0" width="1920" height="1050" />
     </state>
     <state x="883" y="342" key="FileChooserDialogImpl/0.0.1920.1050@0.0.1920.1050" timestamp="1622550150301" />
-    <state width="1249" height="300" key="GridCell.Tab.0.bottom" timestamp="1623066881528">
+    <state width="1623" height="247" key="GridCell.Tab.0.bottom" timestamp="1623165822190">
       <screen x="0" y="0" width="1920" height="1050" />
     </state>
-    <state width="1249" height="300" key="GridCell.Tab.0.bottom/0.0.1920.1050@0.0.1920.1050" timestamp="1623066881528" />
-    <state width="1249" height="300" key="GridCell.Tab.0.center" timestamp="1623066881528">
+    <state width="1623" height="247" key="GridCell.Tab.0.bottom/0.0.1920.1050@0.0.1920.1050" timestamp="1623165822190" />
+    <state width="1623" height="247" key="GridCell.Tab.0.center" timestamp="1623165822190">
       <screen x="0" y="0" width="1920" height="1050" />
     </state>
-    <state width="1249" height="300" key="GridCell.Tab.0.center/0.0.1920.1050@0.0.1920.1050" timestamp="1623066881528" />
-    <state width="1249" height="300" key="GridCell.Tab.0.left" timestamp="1623066881527">
+    <state width="1623" height="247" key="GridCell.Tab.0.center/0.0.1920.1050@0.0.1920.1050" timestamp="1623165822190" />
+    <state width="1623" height="247" key="GridCell.Tab.0.left" timestamp="1623165822190">
       <screen x="0" y="0" width="1920" height="1050" />
     </state>
-    <state width="1249" height="300" key="GridCell.Tab.0.left/0.0.1920.1050@0.0.1920.1050" timestamp="1623066881527" />
-    <state width="1249" height="300" key="GridCell.Tab.0.right" timestamp="1623066881528">
+    <state width="1623" height="247" key="GridCell.Tab.0.left/0.0.1920.1050@0.0.1920.1050" timestamp="1623165822190" />
+    <state width="1623" height="247" key="GridCell.Tab.0.right" timestamp="1623165822190">
       <screen x="0" y="0" width="1920" height="1050" />
     </state>
-    <state width="1249" height="300" key="GridCell.Tab.0.right/0.0.1920.1050@0.0.1920.1050" timestamp="1623066881528" />
-    <state width="1249" height="300" key="GridCell.Tab.1.bottom" timestamp="1623066881528">
+    <state width="1623" height="247" key="GridCell.Tab.0.right/0.0.1920.1050@0.0.1920.1050" timestamp="1623165822190" />
+    <state width="1404" height="287" key="GridCell.Tab.1.bottom" timestamp="1623165822181">
       <screen x="0" y="0" width="1920" height="1050" />
     </state>
-    <state width="1249" height="300" key="GridCell.Tab.1.bottom/0.0.1920.1050@0.0.1920.1050" timestamp="1623066881528" />
-    <state width="1249" height="300" key="GridCell.Tab.1.center" timestamp="1623066881528">
+    <state width="1404" height="287" key="GridCell.Tab.1.bottom/0.0.1920.1050@0.0.1920.1050" timestamp="1623165822181" />
+    <state width="1404" height="287" key="GridCell.Tab.1.center" timestamp="1623165822181">
       <screen x="0" y="0" width="1920" height="1050" />
     </state>
-    <state width="1249" height="300" key="GridCell.Tab.1.center/0.0.1920.1050@0.0.1920.1050" timestamp="1623066881528" />
-    <state width="1249" height="300" key="GridCell.Tab.1.left" timestamp="1623066881528">
+    <state width="1404" height="287" key="GridCell.Tab.1.center/0.0.1920.1050@0.0.1920.1050" timestamp="1623165822181" />
+    <state width="1404" height="287" key="GridCell.Tab.1.left" timestamp="1623165822181">
       <screen x="0" y="0" width="1920" height="1050" />
     </state>
-    <state width="1249" height="300" key="GridCell.Tab.1.left/0.0.1920.1050@0.0.1920.1050" timestamp="1623066881528" />
-    <state width="1249" height="300" key="GridCell.Tab.1.right" timestamp="1623066881528">
+    <state width="1404" height="287" key="GridCell.Tab.1.left/0.0.1920.1050@0.0.1920.1050" timestamp="1623165822181" />
+    <state width="1404" height="287" key="GridCell.Tab.1.right" timestamp="1623165822181">
       <screen x="0" y="0" width="1920" height="1050" />
     </state>
-    <state width="1249" height="300" key="GridCell.Tab.1.right/0.0.1920.1050@0.0.1920.1050" timestamp="1623066881528" />
-    <state width="1249" height="300" key="GridCell.Tab.2.bottom" timestamp="1623066881528">
+    <state width="1404" height="287" key="GridCell.Tab.1.right/0.0.1920.1050@0.0.1920.1050" timestamp="1623165822181" />
+    <state width="1404" height="287" key="GridCell.Tab.2.bottom" timestamp="1623165822182">
       <screen x="0" y="0" width="1920" height="1050" />
     </state>
-    <state width="1249" height="300" key="GridCell.Tab.2.bottom/0.0.1920.1050@0.0.1920.1050" timestamp="1623066881528" />
-    <state width="1249" height="300" key="GridCell.Tab.2.center" timestamp="1623066881528">
+    <state width="1404" height="287" key="GridCell.Tab.2.bottom/0.0.1920.1050@0.0.1920.1050" timestamp="1623165822182" />
+    <state width="1404" height="287" key="GridCell.Tab.2.center" timestamp="1623165822182">
       <screen x="0" y="0" width="1920" height="1050" />
     </state>
-    <state width="1249" height="300" key="GridCell.Tab.2.center/0.0.1920.1050@0.0.1920.1050" timestamp="1623066881528" />
-    <state width="1249" height="300" key="GridCell.Tab.2.left" timestamp="1623066881528">
+    <state width="1404" height="287" key="GridCell.Tab.2.center/0.0.1920.1050@0.0.1920.1050" timestamp="1623165822182" />
+    <state width="1404" height="287" key="GridCell.Tab.2.left" timestamp="1623165822182">
       <screen x="0" y="0" width="1920" height="1050" />
     </state>
-    <state width="1249" height="300" key="GridCell.Tab.2.left/0.0.1920.1050@0.0.1920.1050" timestamp="1623066881528" />
-    <state width="1249" height="300" key="GridCell.Tab.2.right" timestamp="1623066881528">
+    <state width="1404" height="287" key="GridCell.Tab.2.left/0.0.1920.1050@0.0.1920.1050" timestamp="1623165822182" />
+    <state width="1404" height="287" key="GridCell.Tab.2.right" timestamp="1623165822182">
       <screen x="0" y="0" width="1920" height="1050" />
     </state>
-    <state width="1249" height="300" key="GridCell.Tab.2.right/0.0.1920.1050@0.0.1920.1050" timestamp="1623066881528" />
+    <state width="1404" height="287" key="GridCell.Tab.2.right/0.0.1920.1050@0.0.1920.1050" timestamp="1623165822182" />
     <state x="686" y="192" key="Maven.ArtifactSearchDialog" timestamp="1621771464836">
       <screen x="0" y="0" width="1920" height="1050" />
     </state>
@@ -428,10 +447,10 @@
       <screen x="0" y="0" width="1920" height="1050" />
     </state>
     <state x="784" y="198" width="832" height="548" key="find.popup/0.0.1920.1050@0.0.1920.1050" timestamp="1622109355375" />
-    <state x="475" y="225" width="672" height="678" key="search.everywhere.popup" timestamp="1623069374305">
+    <state x="475" y="225" width="672" height="678" key="search.everywhere.popup" timestamp="1623133659820">
       <screen x="0" y="0" width="1920" height="1050" />
     </state>
-    <state x="475" y="225" width="672" height="678" key="search.everywhere.popup/0.0.1920.1050@0.0.1920.1050" timestamp="1623069374305" />
+    <state x="475" y="225" width="672" height="678" key="search.everywhere.popup/0.0.1920.1050@0.0.1920.1050" timestamp="1623133659820" />
     <state x="401" y="148" key="spring file set editor" timestamp="1621251645293">
       <screen x="0" y="0" width="1920" height="1050" />
     </state>

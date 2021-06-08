@@ -68,14 +68,16 @@
                 var albums = result.other.albums;
                 var thtml = '';
                 $.each(albums, function (i, item) {
-                    var firstpicname = item.pics[0];
+                    var firstpicname;
                     var author = item.authorName;
                     var updatetime = item.updateTime;
                     var c_nums = item.c_count;
+                    if(c_nums==0){firstpicname='mark.jpg'}
+                    else{firstpicname= item.pics[0].picName;};
                     var albumName = item.albumName;
                     var id = item.albumId;
                     thtml += '<div class="col-sm-6 col-md-3"><div id="' + item.albumId + '" class="thumbnail">' +
-                        '<img src="http://120.78.196.234/resource/jjykcxh/album/' + firstpicname.picName + '"><div class="caption">' +
+                        '<img src="http://120.78.196.234/resource/jjykcxh/album/' + firstpicname + '"><div class="caption">' +
                         '<a id="album" href="javascript:;" title="' + albumName + '"><h3>' + albumName + '</h3></a>' +
                         '<p><span class="glyphicon glyphicon-user" aria-hidden="true"></span><a id="author" href="javascript:;">' + author + '</a></p>' +
                         '<p><span class="glyphicon glyphicon-time" aria-hidden="true"></span>' + updatetime + '</p> <p align="right"><a href="javascript:;" id="comment" role="button"><span class="glyphicon glyphicon-comment"aria-hidden="true"></span>评论<span ' +

@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www/thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>交际与口才协会后台管理——新闻发布</title>
+    <title>交际与口才协会后台管理——创建相册</title>
     <th:block th:include="Admin/common.html :: source"></th:block>
 </head>
 <body>
@@ -20,7 +20,7 @@
                         <dd><a href="/jjykcxh/admin/user/manageuser">管理用户</a></dd>
                     </dl>
                 </li>
-                <li class="layui-nav-item layui-nav-itemed">
+                <li class="layui-nav-item">
                     <a href="javascript:;">新闻管理</a>
                     <dl class="layui-nav-child">
                         <dd><a href="/jjykcxh/admin/news/edit">发布新闻</a></dd>
@@ -40,7 +40,7 @@
                         <dd><a href="/jjykcxh/admin/comment/manage">管理评论</a></dd>
                     </dl>
                 </li>
-                <li class="layui-nav-item">
+                <li class="layui-nav-item layui-nav-itemed">
                     <a href="javascript:;">相册管理</a>
                     <dl class="layui-nav-child">
                         <dd><a href="/jjykcxh/admin/album/create">新建相册</a></dd>
@@ -53,29 +53,26 @@
         </div>
     </div>
 
-    <div class="layui-body" style="top:80px" >
+    <div class="layui-body" style="top:80px">
         <!-- 内容主体区域 -->
         <form class="layui-form" action="">
-        <div class="layui-form-item">
-            <label class="layui-form-label">标题</label><div class="layui-input-block">
-                <input type="text" name="newsTitle" required  lay-verify="required" placeholder="标题" autocomplete="off" class="layui-input">
+            <div class="layui-form-item">
+                <label class="layui-form-label">相册标题</label><div class="layui-input-block">
+                <input type="text" name="albumName" required  lay-verify="required" placeholder="相册名" autocomplete="off" class="layui-input">
             </div>
-        </div>
-        <div class="layui-form-item">
-            <label class="layui-form-label">作者</label>
-            <div class="layui-input-block">
-                <input type="text" name="authorName" required  lay-verify="required" placeholder="作者" autocomplete="off"  class="layui-input">
             </div>
-        </div>
-        <div class="layui-form-item layui-form-text">
-            <label class="layui-form-label">内容</label>
-            <textarea name="newsContext" id="textarea" style="display: none;" ></textarea></div>
-        <div class="layui-form-item">
-            <div class="layui-input-block">
-                <button class="layui-btn" lay-submit lay-filter="formDemo">发布</button>
-                <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+            <div class="layui-form-item">
+                <label class="layui-form-label">作者</label>
+                <div class="layui-input-block">
+                    <input type="text" name="authorName" required  lay-verify="required" placeholder="作者" autocomplete="off"  class="layui-input">
+                </div>
             </div>
-        </div>
+            <div class="layui-form-item">
+                <div class="layui-input-block">
+                    <button class="layui-btn" lay-submit lay-filter="formDemo">创建</button>
+                    <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+                </div>
+            </div>
         </form>
     </div>
 
@@ -107,25 +104,20 @@
             }
         });
     });
-    //富文本编辑框
-    layui.use('layedit', function () {
-        var layedit = layui.layedit;
-        var index = layedit.build('textarea'); //建立编辑器
+
         layui.use('form', function () {
             var form = layui.form;
             //监听提交
-            form.on('submit(formDemo)', function (data1) {
-                layedit.sync(index);
+            form.on('submit(formDemo)', function () {
                 $.ajax({
-                    url: "/jjykcxh/news/insertOne",
+                    url: "/jjykcxh/album/insertOne",
                     type: "POST",
                     data: $('.layui-form').serialize(),
                     success: function (result) {
-                        layer.msg(result.msg);
+                        layer.alert(result.other.info);
                     }
                 });
             });
-        });
     });
 </script>
 </body>

@@ -21,4 +21,15 @@ public class PicServiceImpl implements PicService {
         criteria.andAlbumIdEqualTo(albumId);
         return picMapper.selectByExample(example);
     }
+
+    @Override
+    public List<Pic> getAllPics() {
+        return picMapper.selectByExample(null);
+    }
+
+    @Override
+    public int deleteById(Integer id) {
+        return picMapper.deleteByPrimaryKey(id);
+    }
+
 }

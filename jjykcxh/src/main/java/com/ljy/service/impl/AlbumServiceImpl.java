@@ -4,10 +4,7 @@ import com.ljy.VO.AlbumVO;
 import com.ljy.dao.AlbumMapper;
 import com.ljy.dao.CommentMapper;
 import com.ljy.dao.PicMapper;
-import com.ljy.entity.Album;
-import com.ljy.entity.Comment;
-import com.ljy.entity.Pic;
-import com.ljy.entity.PicExample;
+import com.ljy.entity.*;
 import com.ljy.service.AlbumService;
 import com.ljy.service.CommentService;
 import org.springframework.beans.BeanUtils;
@@ -53,5 +50,36 @@ public class AlbumServiceImpl implements AlbumService {
     @Override
     public Album getAlbumById(Integer albumId) {
         return albumMapper.selectByPrimaryKey(albumId);
+    }
+
+    @Override
+    public int deleteById(Integer id) {
+        return albumMapper.deleteByPrimaryKey(id);
+    }
+
+    @Override
+    public int updateById(Album album) {
+        return albumMapper.updateByPrimaryKey(album);
+    }
+
+    @Override
+    public List<Album> getAlbumsByKeyWord(String k) {
+        AlbumExample example=new AlbumExample();
+        AlbumExample.Criteria criteria = example.createCriteria();
+        criteria.andAlbumNameLike(k);
+        return albumMapper.selectByExample(example);
+    }
+
+    @Override
+    public int insertOne(Album album) {
+        return albumMapper.insert(album);
+    }
+
+    @Override
+    public List<Album> getAlbumByName(String albumName) {
+        AlbumExample example=new AlbumExample();
+        AlbumExample.Criteria criteria = example.createCriteria();
+        criteria.andAlbumNameEqualTo(albumName);
+        return albumMapper.selectByExample(example);
     }
 }

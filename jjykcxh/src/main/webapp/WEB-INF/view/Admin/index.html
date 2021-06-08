@@ -3,36 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <title>交际与口才协会后台管理系统</title>
-    <link rel="icon" href="/jjykcxh/static/img/favicon.ico" type="images/x-ico"/>
-    <link rel="stylesheet" href="/jjykcxh/static/layui/css/layui.css"  media="all">
-    <script src="https://libs.baidu.com/jquery/2.1.4/jquery.min.js"></script>
-    <script src="/jjykcxh/static/layui/layui.js" charset="utf-8"></script>
+    <th:block th:include="Admin/common.html :: source"></th:block>
 </head>
 <body>
 
 <div class="layui-layout layui-layout-admin">
-    <div class="layui-header">
-        <div class="layui-logo layui-hide-xs layui-bg-black">交协后台</div>
-        <!-- 头部区域（可配合layui 已有的水平导航） -->
-        <ul class="layui-nav layui-layout-right">
-            <li class="layui-nav-item layui-hide layui-show-md-inline-block">
-                <a href="javascript:;">
-                    <img src="/jjykcxh/static/img/user_pic.jpg" class="layui-nav-img">
-                    NewYue
-                </a>
-                <dl class="layui-nav-child">
-                    <dd><a href="">你的信息</a></dd>
-                    <dd><a href=""> 设 置 </a></dd>
-                    <dd><a href=""> 注 销 </a></dd>
-                </dl>
-            </li>
-            <li class="layui-nav-item" lay-header-event="menuRight" lay-unselect>
-                <a href="javascript:;">
-                    <i class="layui-icon layui-icon-more-vertical"></i>
-                </a>
-            </li>
-        </ul>
-    </div>
+    <th:block th:include="Admin/common.html :: top"></th:block>
 
     <div class="layui-side layui-bg-black">
         <div class="layui-side-scroll">
@@ -82,13 +58,10 @@
 
     </div>
 
-    <div class="layui-footer">
-        <!-- 底部固定区域 -->
-        底部固定区域
-    </div>
+    <th:block th:include="Admin/common.html :: footer"></th:block>
 </div>
 
-
+<th:block th:include="Admin/common.html :: js"></th:block>
 <script>
     layui.use(['element', 'layer', 'util'], function(){
     var element = layui.element

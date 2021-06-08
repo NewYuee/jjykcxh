@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.http.HttpServletRequest;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -36,9 +37,16 @@ public class CommentController {
 
     @RequestMapping("/getAll")
     @ResponseBody
-    public Msg getComments(){
+    public Msg getComments(HttpServletRequest request){
+        if(request.getParameter("keyword")!=null){
+            String k="%"+request.getParameter("keyword")+"%";
+            List<Comment> commentList=commentService.getCommentsByKeyWord(k);
+            return Msg.success().add("comments",commentList).add("count",commentList.size());
+        }
+
         List<Comment> list=commentService.getComments();
-        return Msg.success().add("comments",list);
+        int count=list.size();
+        return Msg.success().add("comments",list).add("count",count);
     }
 
 

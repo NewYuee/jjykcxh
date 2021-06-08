@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www/thymeleaf.org">
+
+<div th:fragment="source">
+    <link rel="icon" href="/jjykcxh/static/img/favicon.ico" type="images/x-ico"/>
+    <link rel="stylesheet" href="/jjykcxh/static/layui/css/layui.css"  media="all">
+</div>
+
+<div th:fragment="js">
+    <script src="https://libs.baidu.com/jquery/2.1.4/jquery.min.js"></script>
+    <script src="/jjykcxh/static/layui/layui.js" charset="utf-8"></script>
+</div>
+
+<div th:fragment="top">
+    <div class="layui-header">
+        <div class="layui-logo layui-hide-xs layui-bg-black">交协后台</div>
+        <!-- 头部区域（可配合layui 已有的水平导航） -->
+        <ul class="layui-nav layui-layout-left">
+
+        </ul>
+
+        <ul class="layui-nav layui-layout-right">
+            <li class="layui-nav-item layui-hide layui-show-md-inline-block">
+                <a href="javascript:;">
+                    <img src="/jjykcxh/static/img/user_pic.jpg" class="layui-nav-img">
+                    NewYue
+                </a>
+                <dl class="layui-nav-child">
+                    <dd><a href="">你的信息</a></dd>
+                    <dd><a href=""> 设 置 </a></dd>
+                    <dd><a href=""> 注 销 </a></dd>
+                </dl>
+            </li>
+            <li class="layui-nav-item" lay-header-event="menuRight" lay-unselect>
+                <a href="javascript:;">
+                    <i class="layui-icon layui-icon-more-vertical"></i>
+                </a>
+            </li>
+        </ul>
+    </div>
+</div>
+
+<div th:fragment="footer">
+    <div class="layui-footer">
+        <!-- 底部固定区域 -->
+        版权所有©2019-2021 @成都大学交际与口才协会
+    </div>
+</div>
+</html>

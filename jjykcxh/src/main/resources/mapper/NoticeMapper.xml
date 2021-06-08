@@ -4,7 +4,7 @@
   <resultMap id="BaseResultMap" type="com.ljy.entity.Notice" >
     <id column="notice_id" property="noticeId" jdbcType="INTEGER" />
     <result column="notice_title" property="noticeTitle" jdbcType="VARCHAR" />
-    <result column="notice_context" property="noticeContext" jdbcType="VARCHAR" />
+    <result column="notice_context" property="noticeContext" jdbcType="LONGVARCHAR" />
     <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
   </resultMap>
   <sql id="Example_Where_Clause" >
@@ -99,7 +99,7 @@
   <insert id="insert" parameterType="com.ljy.entity.Notice" >
     insert into notice (notice_id, notice_title, notice_context, 
       update_time)
-    values (#{noticeId,jdbcType=INTEGER}, #{noticeTitle,jdbcType=VARCHAR}, #{noticeContext,jdbcType=VARCHAR}, 
+    values (#{noticeId,jdbcType=INTEGER}, #{noticeTitle,jdbcType=VARCHAR}, #{noticeContext,jdbcType=LONGVARCHAR},
       #{updateTime,jdbcType=TIMESTAMP})
   </insert>
   <insert id="insertSelective" parameterType="com.ljy.entity.Notice" >
@@ -163,7 +163,7 @@
     update notice
     set notice_id = #{record.noticeId,jdbcType=INTEGER},
       notice_title = #{record.noticeTitle,jdbcType=VARCHAR},
-      notice_context = #{record.noticeContext,jdbcType=VARCHAR},
+      notice_context = #{record.noticeContext,jdbcType=LONGVARCHAR},
       update_time = #{record.updateTime,jdbcType=TIMESTAMP}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
