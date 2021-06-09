@@ -45,8 +45,13 @@
                     <dl class="layui-nav-child">
                         <dd><a href="/jjykcxh/admin/album/create">新建相册</a></dd>
                         <dd><a href="/jjykcxh/admin/album/manage">管理相册</a></dd>
-                        <dd><a href="/jjykcxh/admin/album/uploadpic">上传图片</a></dd>
-                        <dd><a href="/jjykcxh/admin/album/picmanage">管理图片</a></dd>
+                        <dd><a href="/jjykcxh/admin/album/picmanage">相册图片管理</a></dd>
+                    </dl>
+                </li>
+                <li class="layui-nav-item ">
+                    <a href="javascript:;">图片管理</a>
+                    <dl class="layui-nav-child">
+                        <dd><a href="/jjykcxh/admin/lbt/manage">图片管理</a></dd>
                     </dl>
                 </li>
             </ul>
@@ -102,6 +107,7 @@
 </script>
 
 <script type="text/html" id="barDemo">
+    <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="detail">上传图片</a>
     <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
     <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
 </script>
@@ -114,7 +120,7 @@
             , url: '/jjykcxh/album/getAll'
             , page: false
             , id:'testReload'
-            , height: 760
+            , height: 'full-173'
             , toolbar: '#toolbarDemo' //开启头部工具栏，并为其绑定左侧模板
             , defaultToolbar: ['filter', 'exports', 'print', { //自定义头部工具栏右侧图标。如无需自定义，去除该参数即可
                 title: '提示'
@@ -239,6 +245,104 @@
                             return false;
                         });
                     });
+            }else if (obj.event === 'detail'){
+                layer.open({
+                    type: 1,
+                    title:'上传图片(允许上传10M以内大小图片)',
+                    skin: 'layui-layer-rim', //加上边框
+                    area: ['700px', '500px'], //宽高
+                    content:'<div class="layui-upload">\n' +
+                        '  <button type="button" class="layui-btn layui-btn-normal" id="testList">选择多文件</button> \n' +
+                        '  <div class="layui-upload-list" style="max-width: 700px;">\n' +
+                        '    <table class="layui-table">\n' +
+                        '      <colgroup>\n' +
+                        '        <col>\n' +
+                        '        <col width="150">\n' +
+                        '        <col width="260">\n' +
+                        '        <col width="150">\n' +
+                        '      </colgroup>\n' +
+                        '      <thead>\n' +
+                        '        <tr><th>文件名</th>\n' +
+                        '        <th>大小</th>\n' +
+                        '        <th>上传进度</th>\n' +
+                        '        <th>操作</th>\n' +
+                        '      </tr></thead>\n' +
+                        '      <tbody id="demoList"></tbody>\n' +
+                        '    </table>\n' +
+                        '  </div>\n' +
+                        '  <button type="button" class="layui-btn" id="testListAction">开始上传</button>\n' +
+                        '</div> '
+                });
+                layui.use(['upload', 'element', 'layer'], function(){
+                    var $ = layui.jquery
+                        ,upload = layui.upload
+                        ,element = layui.element
+                        ,layer = layui.layer;
+                    var uploadListIns = upload.render({
+                        elem: '#testList'
+                        ,elemList: $('#demoList') //列表元素对象
+                        ,url: '/jjykcxh/pic/uploadInAlbum/'+data.albumId
+                        ,accept: 'images'
+                        ,multiple: true
+                        ,number: 10
+                        ,auto: false
+                        ,bindAction: '#testListAction'
+                        ,choose: function(obj){
+                            var that = this;
+                            var files = this.files = obj.pushFile(); //将每次选择的文件追加到文件队列
+                            //读取本地文件
+                            obj.preview(function(index, file, result){
+                                var tr = $(['<tr id="upload-'+ index +'">'
+                                    ,'<td>'+ file.name +'</td>'
+                                    ,'<td>'+ (file.size/1014).toFixed(1) +'kb</td>'
+                                    ,'<td><div class="layui-progress" lay-filter="progress-demo-'+ index +'"><div class="layui-progress-bar" lay-percent=""></div></div></td>'
+                                    ,'<td>'
+                                    ,'<button class="layui-btn layui-btn-xs demo-reload layui-hide">重传</button>'
+                                    ,'<button class="layui-btn layui-btn-xs layui-btn-danger demo-delete">删除</button>'
+                                    ,'</td>'
+                                    ,'</tr>'].join(''));
+
+                                //单个重传
+                                tr.find('.demo-reload').on('click', function(){
+                                    obj.upload(index, file);
+                                });
+
+                                //删除
+                                tr.find('.demo-delete').on('click', function(){
+                                    delete files[index]; //删除对应的文件
+                                    tr.remove();
+                                    uploadListIns.config.elem.next()[0].value = ''; //清空 input file 值，以免删除后出现同名文件不可选
+                                });
+
+                                that.elemList.append(tr);
+                                element.render('progress'); //渲染新加的进度条组件
+                            });
+                        }
+                        ,done: function(res, index, upload){ //成功的回调
+                            var that = this;
+                            if(res.code == 200){ //上传成功
+                            var tr = that.elemList.find('tr#upload-'+ index)
+                                ,tds = tr.children();
+                            tds.eq(3).html(''); //清空操作
+                            delete this.files[index]; //删除文件队列已经上传成功的文件
+                            return;
+                            }
+                            this.error(index, upload);
+                        }
+                        ,allDone: function(obj){ //多文件上传完毕后的状态回调
+                            layer.alert("All uploaded!")
+                        }
+                        ,error: function(index, upload){ //错误回调
+                            var that = this;
+                            var tr = that.elemList.find('tr#upload-'+ index)
+                                ,tds = tr.children();
+                            tds.eq(3).find('.demo-reload').removeClass('layui-hide'); //显示重传
+                        }
+                        ,progress: function(n, elem, e, index){ //注意：index 参数为 layui 2.6.6 新增
+                            element.progress('progress-demo-'+ index, n + '%'); //执行进度条。n 即为返回的进度百分比
+                        }
+                    });
+                });
             }
         });
     });

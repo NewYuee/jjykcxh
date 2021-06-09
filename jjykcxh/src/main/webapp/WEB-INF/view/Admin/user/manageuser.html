@@ -45,17 +45,27 @@
                     <dl class="layui-nav-child">
                         <dd><a href="/jjykcxh/admin/album/create">新建相册</a></dd>
                         <dd><a href="/jjykcxh/admin/album/manage">管理相册</a></dd>
-                        <dd><a href="/jjykcxh/admin/album/uploadpic">上传图片</a></dd>
-                        <dd><a href="/jjykcxh/admin/album/picmanage">管理图片</a></dd>
+                        <dd><a href="/jjykcxh/admin/album/picmanage">相册图片管理</a></dd>
+                    </dl>
+                </li>
+                <li class="layui-nav-item ">
+                    <a href="javascript:;">图片管理</a>
+                    <dl class="layui-nav-child">
+                        <dd><a href="/jjykcxh/admin/lbt/manage">图片管理</a></dd>
                     </dl>
                 </li>
             </ul>
         </div>
     </div>
 
-    <div class="layui-body site-demo-flow" id="LAY">
+    <div class="layui-body site-demo-flow" style="top:80px" id="LAY">
         <!-- 内容主体区域 -->
-
+        <div class="research layui-inline">
+            <div class="layui-inline">
+                <input class="layui-input" name="keyword" placeholder="输入用户名进行搜索" id="demoReload" autocomplete="off">
+            </div>
+            <button class="layui-btn layui-btn-sm search" data-type="reload">搜索</button>
+        </div>
         <table class="layui-hide" id="test" lay-filter="test"></table>
     </div>
 
@@ -109,7 +119,8 @@
             elem: '#test'
             , url: '/jjykcxh/user/getAlloo'
             , page: false
-            , height: 820
+            , height: 'full-173'
+            , id:'testReload'
             , toolbar: '#toolbarDemo' //开启头部工具栏，并为其绑定左侧模板
             , defaultToolbar: ['filter', 'exports', 'print', { //自定义头部工具栏右侧图标。如无需自定义，去除该参数即可
                 title: '提示'
@@ -123,9 +134,9 @@
                     {type: 'checkbox', fixed: 'left'}
                     , {field: 'userId', title: '用户ID', sort: true}
                     , {field: 'userPwd', title: '用户密码',}
-                    , {field: 'userName', title: '用户名', sort: true}
+                    , {field: 'userName', title: '用户名'}
                     , {field: 'userGender', title: '性别'}
-                    , {field: 'userIdentity', title: '身份码(1为管理员)'}
+                    , {field: 'userIdentity', title: '身份码(1为管理员)',sort: true}
                     , {fixed: 'right', align: 'center', toolbar: '#barDemo'}
                 ]
             ]
@@ -137,8 +148,29 @@
                     "data": res.other.users
                 };
             }
-
         });
+
+        //搜索框
+        var $ = layui.$, active = {
+            reload: function(){
+                var demoReload = $('#demoReload');
+                //执行重载
+                table.reload('testReload', {
+                    page: {
+                        curr: 1 //重新从第 1 页开始
+                    }
+                    ,where: {
+                        keyword: demoReload.val()
+                    }
+                });
+            }
+        };
+
+        $('.research .search').on('click', function(){
+            var type = $(this).data('type');
+            active[type] ? active[type].call(this) : '';
+        });
+
 
         //头工具栏事件
         table.on('toolbar(test)', function (obj) {
@@ -212,23 +244,23 @@
                         '</form>'
                 });
                 layui.use('form', function () {
-                    var form = layui.form;
-                    form.render();
-                    //监听提交
-                    form.on('submit(formDemo)', function (data1) {
-                        $.ajax({
-                            url: "/jjykcxh/user/update/" + data.userId,
-                            type: "POST",
-                            data: $('.layui-form').serialize(),
-                            success: function (result) {
+                        var form = layui.form;
+                        form.render();
+                        //监听提交
+                        form.on('submit(formDemo)', function (data1) {
+                            $.ajax({
+                                url: "/jjykcxh/user/update/" + data.userId,
+                                type: "POST",
+                                data: $('.layui-form').serialize(),
+                                success: function (result) {
 
-                                layer.msg(result.msg);
-                                setTimeout(reloadPage, 1000);
-                            }
+                                    layer.msg(result.msg);
+                                    setTimeout(reloadPage, 1000);
+                                }
+                            });
+                            console.log("userId====>")
+                            return false;
                         });
-                        console.log("userId====>")
-                        return false;
-                    });
                 });
             }
         });

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ljy.dao.PicsMapper" >
+    <resultMap id="BaseResultMap" type="com.ljy.entity.Pics" >
+        <id column="pid" property="pid" jdbcType="INTEGER" />
+        <result column="pname" property="pname" jdbcType="VARCHAR" />
+        <result column="src" property="src" jdbcType="VARCHAR" />
+        <result column="type" property="type" jdbcType="VARCHAR"/>
+    </resultMap>
+    <select id="getAll" resultMap="BaseResultMap" parameterType="com.ljy.entity.Pics" >
+        select *
+        from pics
+        order by pid
+    </select>
+
+    <select id="getByType" resultMap="BaseResultMap" parameterType="java.lang.String" >
+        select *
+        from pics
+        where type = #{type,jdbcType=VARCHAR}
+    </select>
+    <select id="getOneById" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+        select *
+        from pics
+        where pid = #{id,jdbcType=INTEGER}
+    </select>
+    <delete id="deleteById" parameterType="java.lang.Integer" >
+    delete from pics
+    where pid = #{id,jdbcType=INTEGER}
+  </delete>
+    <insert id="insertOne" parameterType="com.ljy.entity.Pics" >
+    insert into pics (pid, pname, src, type
+      )
+    values (#{pid,jdbcType=INTEGER}, #{pname,jdbcType=VARCHAR}, #{src,jdbcType=VARCHAR},#{type,jdbcType=VARCHAR}
+      )
+  </insert>
+    <update id="updateById" parameterType="com.ljy.entity.Pics" >
+    update pics
+    set pname = #{pname,jdbcType=VARCHAR},
+      src = #{src,jdbcType=VARCHAR},
+      type = #{type,jdbcType=VARCHAR}
+    where pid = #{pid,jdbcType=INTEGER}
+  </update>
+</mapper>

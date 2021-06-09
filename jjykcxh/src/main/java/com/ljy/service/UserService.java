@@ -18,4 +18,6 @@ public interface UserService {
     int updateById(User user);
 
     int deleteById(Integer id);
+
+    List<User> getUserLikeName(String keyword);
 }

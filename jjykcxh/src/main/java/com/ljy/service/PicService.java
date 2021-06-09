@@ -11,4 +11,7 @@ public interface PicService {
 
     int deleteById(Integer id);
 
+    List<Pic> searchLikeId(Integer key);
+
+    int insertOne(Pic pic);
 }

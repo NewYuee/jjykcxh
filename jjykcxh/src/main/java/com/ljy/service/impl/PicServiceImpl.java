@@ -32,4 +32,17 @@ public class PicServiceImpl implements PicService {
         return picMapper.deleteByPrimaryKey(id);
     }
 
+    @Override
+    public List<Pic> searchLikeId(Integer key) {
+        PicExample example=new PicExample();
+        PicExample.Criteria criteria = example.createCriteria();
+        criteria.andAlbumIdLessThanOrEqualTo(key);
+        return null;
+    }
+
+    @Override
+    public int insertOne(Pic pic) {
+        return picMapper.insert(pic);
+    }
+
 }

@@ -45,8 +45,13 @@
                     <dl class="layui-nav-child">
                         <dd><a href="/jjykcxh/admin/album/create">新建相册</a></dd>
                         <dd><a href="/jjykcxh/admin/album/manage">管理相册</a></dd>
-                        <dd><a href="/jjykcxh/admin/album/uploadpic">上传图片</a></dd>
-                        <dd><a href="/jjykcxh/admin/album/picmanage">管理图片</a></dd>
+                        <dd><a href="/jjykcxh/admin/album/picmanage">相册图片管理</a></dd>
+                    </dl>
+                </li>
+                <li class="layui-nav-item ">
+                    <a href="javascript:;">图片管理</a>
+                    <dl class="layui-nav-child">
+                        <dd><a href="/jjykcxh/admin/lbt/manage">图片管理</a></dd>
                     </dl>
                 </li>
             </ul>
@@ -113,7 +118,9 @@
             , url: '/jjykcxh/pic/getAll'
             , page: false
             , id:'testReload'
-            , height: 760
+            , height: 'full-173'
+            ,width:600
+            ,cellMinWidth: 40
             , toolbar: '#toolbarDemo' //开启头部工具栏，并为其绑定左侧模板
             , defaultToolbar: ['filter', 'exports', 'print', { //自定义头部工具栏右侧图标。如无需自定义，去除该参数即可
                 title: '提示'
@@ -121,13 +128,12 @@
                 , icon: 'layui-icon-tips'
             }]
             , title: '用户数据表'
-            , cellMinWidth: 80
             , cols: [
                 [
                     {type: 'checkbox', fixed: 'left'}
-                    , {field: 'picId', title: 'ID', sort: true}
-                    , {field: 'picName', title: '图片名',}
-                    , {field: 'albumId', title: '所属相册id'}
+                    , {field: 'picId', title: 'ID', width: 100,sort: true}
+                    , {field: 'picName',align: 'center', width:100, title: '图片预览',templet: function(data) { return '<div onclick="show_img(this)" ><img src="http://120.78.196.234/resource/jjykcxh/album/'+data.picName+'" ' + 'alt="'+data.picName+'" title="'+data.picName+'" style="width:auto;height: 160px"></a></div>'; }}
+                    , {field: 'albumId', width:180,title: '所属相册id',sort: true}
                     , {fixed: 'right', align: 'center', toolbar: '#barDemo'}
                 ]
             ]
@@ -145,15 +151,17 @@
         var $ = layui.$, active = {
             reload: function(){
                 var demoReload = $('#demoReload');
+                if (demoReload!=null){
                 //执行重载
                 table.reload('testReload', {
                     page: {
                         curr: 1 //重新从第 1 页开始
                     }
                     ,where: {
-                        keyword: demoReload.val()
+                        kw: demoReload.val()
                     }
                 });
+                }
             }
         };
 

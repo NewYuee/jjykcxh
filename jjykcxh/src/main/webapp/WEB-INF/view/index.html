@@ -9,8 +9,7 @@
     <link rel="icon" href="/jjykcxh/static/img/favicon.ico" type="images/x-ico"/>
     <link rel="stylesheet" type="text/css" href="/jjykcxh/static/css/menu.css">
     <link rel="stylesheet" type="text/css" href="/jjykcxh/static/css/column.css">
-    <script src="/jjykcxh/static/js/lbt.js"></script>
-    <script src="/jjykcxh/static/js/jquery-1.8.2.min.js"></script>
+    <link rel="stylesheet" href="/jjykcxh/static/layui/css/layui.css"  media="all">
 </head>
 <body>
 <div class="head"><a href="/jjykcxh" title="成都大学交际与口才协会欢迎您！"><img src="/jjykcxh/static/img/clubphoto.jpg" id="top"
@@ -19,39 +18,14 @@
                                                                   style="float:left; border-radius: 50%;"></a>
     <h2 class="title">成都大学交际与口才协会</h2></div>
 <th:block th:include="common.html :: top_nav"></th:block>
-<div class="containerlb">
-    <div class="mySlides fade">
-        <img src="/jjykcxh/static/img/yjls.jpg" width="auto" height="600px">
-        <div class="text">四川省第三届演讲联赛成都东赛区决赛</div>
+<div id="lbk" style="position: relative" align="center">
+    <div id="bg" style="position: absolute;left: 0;top:0">
     </div>
+<div class="layui-carousel" style="position: relative;" id="test1"  lay-filter="test1">
+    <div id="citem" carousel-item>
+    </div>
+</div>
 
-    <div class="mySlides fade">
-        <img src="/jjykcxh/static/img/chengli.jpg" width="auto" height="600px">
-        <div class="text">交协与成理演讲协会联谊</div>
-    </div>
-
-    <div class="mySlides fade">
-        <img src="/jjykcxh/static/img/liyi.jpg" width="auto" height="600px">
-        <div class="text">交协与礼仪协会联谊</div>
-    </div>
-    <div class="mySlides fade">
-        <img src="/jjykcxh/static/img/jxydf.jpg" width="auto" height="600px">
-        <div class="text">交协与大风联谊</div>
-    </div>
-    <div class="mySlides fade">
-        <img src="/jjykcxh/static/img/dushufenxiang.jpg" width="auto" height="600px">
-        <div class="text">一次读书分享会</div>
-    </div>
-    <a class="prev" onclick="plusSlides(-1)">❮</a>
-    <a class="next" onclick="plusSlides(1)">❯</a>
-    <br>
-    <div style="text-align:center">
-        <span class="dot" onclick="currentSlide(1)"></span>
-        <span class="dot" onclick="currentSlide(2)"></span>
-        <span class="dot" onclick="currentSlide(3)"></span>
-        <span class="dot" onclick="currentSlide(4)"></span>
-        <span class="dot" onclick="currentSlide(5)"></span>
-    </div>
 </div>
 <script src="/jjykcxh/static/js/getTime.js"></script>
 <div class="clock"><img style="float: left;" src="/jjykcxh/static/img/clock.png">
@@ -92,14 +66,60 @@
 </div>
 
 <th:block th:include="common.html :: footer"></th:block>
+<script src="https://libs.baidu.com/jquery/2.1.4/jquery.min.js"></script>
+<script src="/jjykcxh/static/layui/layui.js" charset="utf-8"></script>
+<script>
+    $.ajax({
+        url:'/jjykcxh/pics/getPicsByType',
+        type:"GET",
+        data:'type=0',
+        success:function (result) {
+            var pics=result.other.pics;
+            var ht='';
+            $.each(pics,function (index,item) {
+                ht+='<div><img src="'+item.src+'" style="width: 100%;height:auto"></div>'
+            });
+            $('#citem').html(ht);
+            layui.use('carousel', function(){
+                var carousel = layui.carousel;
+                //建造实例
+                carousel.render({
+                    elem: '#test1'
+                    ,width: '900px' //设置容器宽度
+                    ,height:'100%'
+                    ,arrow: 'hover'
+                    ,interval:6000
+                });
+                bkp=$('.layui-this img').attr("src");
+            });
+        }
+    });
+
+
+    var carousel = layui.carousel;
+    //触发轮播切换事件
+    carousel.on('change(test1)', function(obj){ //test1来源于对应HTML容器的 lay-filter="test1" 属性值
+        var s=obj.item.find('img').attr("src");
+        var nbkp='url('+s+')';
+        $('#bg').css("background-image",nbkp);
+        console.log("当前src====>"+s); //上一个条目的索引
+
+    });
+</script>
+<script>
+
+</script>
 </body>
 
 <script>
     $(function () {
+
         displayNewsInfo();
         displayNoticeInfo();
         displayAlbumInfo();
+
     });
+
 
     function displayAlbumInfo() {
         $.ajax({
@@ -110,12 +130,11 @@
                 var albums = result.other.albums;
                 var s = '';
                 $.each(albums, function (index, item) {
-                    console.log("iindex=======>"+index);
                     if(index>=4){
                         return;
                     };
                     var c_nums = item.c_count;
-                    if(c_nums==0){firstpicname='mark.jpg'}
+                    if(item.pics.length==0){firstpicname='mark.jpg'}
                     else{firstpicname= item.pics[0].picName;};
                     s += '<div class="photos"><div class="polaroid"><a target="_blank" href="/jjykcxh/album/index#'+item.albumId+'"><img src="http://120.78.196.234/resource/jjykcxh/album/' + firstpicname+'"></a><div class="desc">' + item.albumName + '</div></div></div>';
                 });

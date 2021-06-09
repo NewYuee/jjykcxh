@@ -23,20 +23,22 @@
 
 <div th:fragment="top_nav">
     <div class="top">
-        <div class="topnav">
+        <div class="topnav" style="width:900px">
             <ul>
                 <li><a href="/jjykcxh">交协首页</a></li>
                 <li><a href="#">走近交协</a>
                     <ul>
-                        <li><a href="#">协会简介</a></li>
-                        <li><a href="#">部门简介</a></li>
+                        <li><a href="/jjykcxh/intro.html">协会简介</a></li>
+                        <li><a href="/jjykcxh/intro.html">部门简介</a></li>
                     </ul>
                 </li>
-                <li><a href="#">交协要闻</a>
+                <li><a href="/jjykcxh/news.html">交协要闻</a>
                     <ul>
                         <li><a href="/jjykcxh/news.html">新闻速递</a></li>
                         <li><a href="/jjykcxh/notice.html">通知公告</a></li>
                     </ul>
+                </li>
+                <li><a href="/jjykcxh/album/index">交协印象</a>
                 </li>
                 <li><a href="https://www.cdu.edu.cn/">成大官网</a></li>
                 <li style="float:right" th:if="${session.userInfo==null}"><a href="/jjykcxh/login">登录/注册</a></li>

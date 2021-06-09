@@ -1,10 +1,8 @@
 package com.ljy.controller;
 
-import com.ljy.entity.Album;
 import com.ljy.entity.Msg;
-import com.ljy.entity.Pic;
-import com.ljy.service.AlbumService;
-import com.ljy.service.PicService;
+import com.ljy.entity.Pics;
+import com.ljy.service.PicsService;
 import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.WebResource;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +10,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
@@ -20,43 +17,43 @@ import java.util.List;
 import java.util.UUID;
 
 @Controller
-@RequestMapping("/pic")
-public class PicController {
+@RequestMapping("/pics")
+public class PicsController {
     @Autowired
-    PicService picService;
-
-    @Autowired
-    AlbumService albumService;
+    PicsService picsService;
 
     @RequestMapping("/getAll")
     @ResponseBody
-    public Msg getAll(@RequestParam(value = "kw",required = false)Integer id){
-        List<Pic> list=picService.getAllPics();
-        if (id!=null){
-            list=picService.getPicsByAid(id);
-        }
-        return Msg.success().add("pics",list).add("count",list.size());
-
+    public Msg getAll(){
+        return Msg.success().add("pics",picsService.getAll()).add("count",picsService.getAll().size());
     }
 
-    @RequestMapping("/deleteById")
+    @RequestMapping("/update/{id}")
     @ResponseBody
-    public Msg deleteById(@RequestParam("id")Integer id){
-        int i=picService.deleteById(id);
+    public Msg updateById(@PathVariable("id")Integer id,Pics pics){
+        Pics pc=picsService.getOneById(id);
+        pc.setType(pics.getType());
+        int i = picsService.updateById(pc);
+        if (i!=0){
+            return Msg.success();
+        }
+        return Msg.fail();
+    }
+    @PostMapping("/deleteById")
+    @ResponseBody
+    public Msg deleteById(@RequestParam("id") Integer id){
+        int i = picsService.deleteById(id);
         if (i!=0){
             return Msg.success();
         }
         return Msg.fail();
     }
 
-    @PostMapping("/uploadInAlbum/{albumId}")
+    @PostMapping("/upload")
     @ResponseBody
-    public Msg uploadInAlbum(@RequestParam("file")MultipartFile file, @PathVariable("albumId") Integer aid) throws UnsupportedEncodingException {
-        if (albumService.getAlbumById(aid)==null){
-            return Msg.fail();
-        }
+    public Msg uploadInAlbum(@RequestParam("file") MultipartFile file) throws UnsupportedEncodingException {
         //1.定义上传文件服务器的路径
-        String path="http://120.78.196.234/resource/jjykcxh/album/";
+        String path="http://120.78.196.234/resource/jjykcxh/pics/";
         //获取上传文件的名称
         String originalFilename = file.getOriginalFilename();
         String suffix=originalFilename.substring(originalFilename.lastIndexOf("."));
@@ -79,13 +76,22 @@ public class PicController {
         }
         System.out.println("文件上传成功<========="+encodeFileName);
 
-        Pic pic=new Pic();
-        pic.setPicName(encodeFileName);
-        pic.setAlbumId(aid);
-        int i=picService.insertOne(pic);
+        Pics pics=new Pics();
+        pics.setPname(encodeFileName);
+        pics.setSrc(path + encodeFileName);
+        pics.setType("1");
+        int i=picsService.insertOne(pics);
         if (i==0){
             return Msg.fail();
         }
         return Msg.success();
     }
+
+    @RequestMapping("/getPicsByType")
+    @ResponseBody
+    public Msg getByType(@RequestParam("type")String type){
+        List<Pics> picsList =picsService.getByType(type);
+        return Msg.success().add("pics",picsList);
+    }
+
 }

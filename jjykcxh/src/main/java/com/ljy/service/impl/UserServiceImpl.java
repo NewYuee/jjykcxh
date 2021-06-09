@@ -60,4 +60,12 @@ public class UserServiceImpl implements UserService {
     public int deleteById(Integer id) {
         return userMapper.deleteByPrimaryKey(id);
     }
+
+    @Override
+    public List<User> getUserLikeName(String keyword) {
+        UserExample example=new UserExample();
+        UserExample.Criteria criteria = example.createCriteria();
+        criteria.andUserNameLike(keyword);
+        return userMapper.selectByExample(example);
+    }
 }

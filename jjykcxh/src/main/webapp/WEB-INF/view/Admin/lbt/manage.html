@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>交际与口才协会后台管理——图片管理</title>
+    <th:block th:include="Admin/common.html :: source"></th:block>
+</head>
+<body>
+
+<div class="layui-layout layui-layout-admin">
+    <th:block th:include="Admin/common.html :: top"></th:block>
+
+    <div class="layui-side layui-bg-black">
+        <div class="layui-side-scroll">
+            <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
+            <ul class="layui-nav layui-nav-tree" lay-filter="test">
+                <li class="layui-nav-item ">
+                    <a class="" href="javascript:;">用户管理</a>
+                    <dl class="layui-nav-child">
+                        <dd><a href="/jjykcxh/admin/user/manageuser">管理用户</a></dd>
+                    </dl>
+                </li>
+                <li class="layui-nav-item">
+                    <a href="javascript:;">新闻管理</a>
+                    <dl class="layui-nav-child">
+                        <dd><a href="/jjykcxh/admin/news/edit">发布新闻</a></dd>
+                        <dd><a href="/jjykcxh/admin/news/manage">管理新闻</a></dd>
+                    </dl>
+                </li>
+                <li class="layui-nav-item">
+                    <a href="javascript:;">通知管理</a>
+                    <dl class="layui-nav-child">
+                        <dd><a href="/jjykcxh/admin/notice/edit">新增通知</a></dd>
+                        <dd><a href="/jjykcxh/admin/notice/manage">管理通知</a></dd>
+                    </dl>
+                </li>
+                <li class="layui-nav-item">
+                    <a href="javascript:;">评论管理</a>
+                    <dl class="layui-nav-child">
+                        <dd><a href="/jjykcxh/admin/comment/manage">管理评论</a></dd>
+                    </dl>
+                </li>
+                <li class="layui-nav-item">
+                    <a href="javascript:;">相册管理</a>
+                    <dl class="layui-nav-child">
+                        <dd><a href="/jjykcxh/admin/album/create">新建相册</a></dd>
+                        <dd><a href="/jjykcxh/admin/album/manage">管理相册</a></dd>
+                        <dd><a href="/jjykcxh/admin/album/picmanage">相册图片管理</a></dd>
+                    </dl>
+                </li>
+                <li class="layui-nav-item layui-nav-itemed">
+                    <a href="javascript:;">图片管理</a>
+                    <dl class="layui-nav-child">
+                        <dd><a href="/jjykcxh/admin/lbt/manage">图片管理</a></dd>
+                    </dl>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="layui-body site-demo-flow" style="top:80px" id="LAY">
+        <!-- 内容主体区域 -->
+        <table class="layui-hide" id="test" lay-filter="test"></table>
+    </div>
+
+    <th:block th:include="Admin/common.html :: footer"></th:block>
+</div>
+
+<th:block th:include="Admin/common.html :: js"></th:block>
+<script>
+    layui.use(['element', 'layer', 'util'], function () {
+        var element = layui.element
+            , layer = layui.layer
+            , util = layui.util
+            , $ = layui.$;
+        //头部事件
+        util.event('lay-header-event', {
+            //左侧菜单事件
+            menuLeft: function (othis) {
+                layer.msg('展开左侧菜单的操作', {icon: 0});
+            }
+            , menuRight: function () {
+                layer.open({
+                    type: 1
+                    , content: '<div style="padding: 15px;">处理右侧面板的操作</div>'
+                    , area: ['260px', '100%']
+                    , offset: 'rt' //右上角
+                    , anim: 5
+                    , shadeClose: true
+                });
+            }
+        });
+    });
+</script>
+<script type="text/html" id="toolbarDemo">
+    <div class="layui-btn-container">
+        <button class="layui-btn layui-btn-sm" lay-event="getCheckData">获取选中行数据</button>
+        <button class="layui-btn layui-btn-sm" lay-event="getCheckLength">获取选中数目</button>
+        <button class="layui-btn layui-btn-sm" lay-event="isAll">验证是否全选</button>
+        <button class="layui-btn layui-btn-sm" lay-event="add">新增图片</button>
+    </div>
+</script>
+
+<script type="text/html" id="barDemo">
+    <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
+    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+</script>
+
+<script>
+    layui.use('table', function () {
+        var table = layui.table;
+        table.render({
+            elem: '#test'
+            , url: '/jjykcxh/pics/getAll'
+            , page: false
+            , id:'testReload'
+            , height: 'full-173'
+            ,width:800
+            ,cellMinWidth: 40
+            , toolbar: '#toolbarDemo' //开启头部工具栏，并为其绑定左侧模板
+            , defaultToolbar: ['filter', 'exports', 'print', { //自定义头部工具栏右侧图标。如无需自定义，去除该参数即可
+                title: '提示'
+                , layEvent: 'LAYTABLE_TIPS'
+                , icon: 'layui-icon-tips'
+            }]
+            , title: '用户数据表'
+            , cols: [
+                [
+                    {type: 'checkbox', fixed: 'left'}
+                    , {field: 'pid', title: 'ID', width: 150,sort: true}
+                    , {field: 'pname',align: 'center', width:100, title: '图片预览',templet: function(data) { return '<div onclick="show_img(this)" ><img src="'+data.src+'" ' + 'alt="'+data.pname+'" title="'+data.pname+'" style="width:auto;height: 200px"></a></div>'; }}
+                    , {field: 'type', width:200,title: '图片类型(0表示轮播图)',sort: true}
+                    , {fixed: 'right', align: 'center', toolbar: '#barDemo'}
+                ]
+            ]
+            , parseData: function (res) {
+                return {
+                    "code": 0,
+                    "msg": res.msg,
+                    "count": res.other.count,
+                    "data": res.other.pics
+                };
+            }
+        });
+
+
+        //头工具栏事件
+        table.on('toolbar(test)', function (obj) {
+            var checkStatus = table.checkStatus(obj.config.id);
+            switch (obj.event) {
+                case 'getCheckData':
+                    var data = checkStatus.data;
+                    layer.alert(JSON.stringify(data));
+                    break;
+                case 'getCheckLength':
+                    var data = checkStatus.data;
+                    layer.msg('选中了：' + data.length + ' 个');
+                    break;
+                case 'isAll':
+                    layer.msg(checkStatus.isAll ? '全选' : '未全选');
+                    break;
+                case 'add':
+                    layer.open({
+                        type: 1,
+                        title:'上传图片(允许上传10M以内大小图片)',
+                        skin: 'layui-layer-rim', //加上边框
+                        area: ['700px', '500px'], //宽高
+                        content:'<div class="layui-upload">\n' +
+                            '  <button type="button" class="layui-btn layui-btn-normal" id="testList">选择多文件</button> \n' +
+                            '  <div class="layui-upload-list" style="max-width: 700px;">\n' +
+                            '    <table class="layui-table">\n' +
+                            '      <colgroup>\n' +
+                            '        <col>\n' +
+                            '        <col width="150">\n' +
+                            '        <col width="260">\n' +
+                            '        <col width="150">\n' +
+                            '      </colgroup>\n' +
+                            '      <thead>\n' +
+                            '        <tr><th>文件名</th>\n' +
+                            '        <th>大小</th>\n' +
+                            '        <th>上传进度</th>\n' +
+                            '        <th>操作</th>\n' +
+                            '      </tr></thead>\n' +
+                            '      <tbody id="demoList"></tbody>\n' +
+                            '    </table>\n' +
+                            '  </div>\n' +
+                            '  <button type="button" class="layui-btn" id="testListAction">开始上传</button>\n' +
+                            '</div> '
+                    });
+                    layui.use(['upload', 'element', 'layer'], function(){
+                        var $ = layui.jquery
+                            ,upload = layui.upload
+                            ,element = layui.element
+                            ,layer = layui.layer;
+                        var uploadListIns = upload.render({
+                            elem: '#testList'
+                            ,elemList: $('#demoList') //列表元素对象
+                            ,url: '/jjykcxh/pics/upload'
+                            ,accept: 'images'
+                            ,multiple: true
+                            ,number: 10
+                            ,auto: false
+                            ,bindAction: '#testListAction'
+                            ,choose: function(obj){
+                                var that = this;
+                                var files = this.files = obj.pushFile(); //将每次选择的文件追加到文件队列
+                                //读取本地文件
+                                obj.preview(function(index, file, result){
+                                    var tr = $(['<tr id="upload-'+ index +'">'
+                                        ,'<td>'+ file.name +'</td>'
+                                        ,'<td>'+ (file.size/1014).toFixed(1) +'kb</td>'
+                                        ,'<td><div class="layui-progress" lay-filter="progress-demo-'+ index +'"><div class="layui-progress-bar" lay-percent=""></div></div></td>'
+                                        ,'<td>'
+                                        ,'<button class="layui-btn layui-btn-xs demo-reload layui-hide">重传</button>'
+                                        ,'<button class="layui-btn layui-btn-xs layui-btn-danger demo-delete">删除</button>'
+                                        ,'</td>'
+                                        ,'</tr>'].join(''));
+
+                                    //单个重传
+                                    tr.find('.demo-reload').on('click', function(){
+                                        obj.upload(index, file);
+                                    });
+
+                                    //删除
+                                    tr.find('.demo-delete').on('click', function(){
+                                        delete files[index]; //删除对应的文件
+                                        tr.remove();
+                                        uploadListIns.config.elem.next()[0].value = ''; //清空 input file 值，以免删除后出现同名文件不可选
+                                    });
+
+                                    that.elemList.append(tr);
+                                    element.render('progress'); //渲染新加的进度条组件
+                                });
+                            }
+                            ,done: function(res, index, upload){ //成功的回调
+                                var that = this;
+                                if(res.code == 200){ //上传成功
+                                    var tr = that.elemList.find('tr#upload-'+ index)
+                                        ,tds = tr.children();
+                                    tds.eq(3).html(''); //清空操作
+                                    delete this.files[index]; //删除文件队列已经上传成功的文件
+                                    return;
+                                }
+                                this.error(index, upload);
+                            }
+                            ,allDone: function(obj){ //多文件上传完毕后的状态回调
+                                layer.alert("All uploaded!")
+                            }
+                            ,error: function(index, upload){ //错误回调
+                                var that = this;
+                                var tr = that.elemList.find('tr#upload-'+ index)
+                                    ,tds = tr.children();
+                                tds.eq(3).find('.demo-reload').removeClass('layui-hide'); //显示重传
+                            }
+                            ,progress: function(n, elem, e, index){ //注意：index 参数为 layui 2.6.6 新增
+                                element.progress('progress-demo-'+ index, n + '%'); //执行进度条。n 即为返回的进度百分比
+                            }
+                        });
+                    });
+                    break;
+
+                //自定义头工具栏右侧图标 - 提示
+                case 'LAYTABLE_TIPS':
+                    layer.alert('这是工具栏右侧自定义的一个图标按钮');
+                    break;
+            }
+            ;
+        });
+
+        //监听行工具事件
+        table.on('tool(test)', function (obj) {
+            var data = obj.data;
+            if (obj.event === 'del') {
+                layer.confirm('真的删除本条数据吗', function (index) {
+                    $.ajax({
+                        url: "/jjykcxh/pics/deleteById",
+                        data: "id=" + data.pid,
+                        type: "POST",
+                        success: function (result) {
+                            if (result.code == 200) {
+                                layer.msg("删除成功！")
+                                obj.del();
+                            } else if (result.code == 400) {
+                                layer.msg('删除失败！');
+                            }
+                            layer.close(index);
+                        }
+                    });
+                });
+            }else if (obj.event === 'edit'){
+                var checkinput='<input type="radio" name="type" value="0" title="轮播图" checked=""><input type="radio" name="type" value="1" title="其它">';
+                if(data.type=='1'){
+                    checkinput='<input type="radio" name="type" value="0" title="轮播图" ><input type="radio" name="type" value="1" title="其它" checked="">';
+                }
+                layer.open({
+                    type: 1,
+                    skin: 'layui-layer-rim', //加上边框
+                    area: ['400px', '200px'], //宽高
+                    content: '<form class="layui-form" action="" lay-filter="example">' +
+                        '<div class="layui-form-item layui-form-text"><label class="layui-form-label">类型</label><div class="layui-input-block">'+checkinput+'</div></div>' +
+                        '<div class="layui-input-block">' +
+                        '<button class="layui-btn" lay-submit lay-filter="formDemo">立即提交</button>\n' +
+                        '<button type="reset" class="layui-btn layui-btn-primary">重置</button>\n' +
+                        '</div></div>' +
+                        '</form>'
+                });
+                layui.use('form', function () {
+                    var form = layui.form;
+                    form.render();
+                    //监听提交
+                    form.on('submit(formDemo)', function (data1) {
+                        $.ajax({
+                            url: "/jjykcxh/pics/update/" + data.pid,
+                            type: "POST",
+                            data: $('.layui-form').serialize(),
+                            success: function (result) {
+                                layer.msg(result.msg);
+                                setTimeout(reloadPage, 1000);
+                            }
+                        });
+                        return false;
+                    });
+                });
+            }
+        });
+    });
+
+    function reloadPage(){
+        window.location.reload();
+    }
+
+    layui.use('flow', function () {
+        var flow = layui.flow;
+
+        flow.lazyimg({
+            elem: '#LAY tr'
+            //一般不用设置，此处只是演示需要。
+        });
+    });
+
+
+</script>
+
+</body>
+</html>

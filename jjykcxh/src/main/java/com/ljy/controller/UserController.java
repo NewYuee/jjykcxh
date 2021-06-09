@@ -8,6 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.List;
@@ -62,8 +63,12 @@ public class UserController {
 
     @RequestMapping("/user/getAlloo")
     @ResponseBody
-    public Msg getAllUser(){
+    public Msg getAllUser(HttpServletRequest request){
         List<User> list= userService.getAll();
+        if (request.getParameter("keyword")!=null){
+            String kw="%"+request.getParameter("keyword")+"%";
+            list=userService.getUserLikeName(kw);
+        }
         int count=userService.getCount();
         return Msg.success().add("users",list).add("count",count);
     }
