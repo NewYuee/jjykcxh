@@ -7,26 +7,6 @@
     display:none;
 }
 
-.bktop{
-    border-radius: 6px;
-    padding: 8px;
-    background-color: rgba(204,204,204,0.4);
-    font-size: 10px;
-    font-family: 微软雅黑;
-    text-align: center;
-    position:fixed;
-    bottom:20px;
-    right:5px
-}
-.bktop a{
-    text-decoration: none;
-    color: black;
-}
-
-.bktop:hover{
-    background-color: #f1f1f1;
-}
-
 .head{
     float:left;
     width:100%;
@@ -38,12 +18,19 @@
     font-size: 30px;
     background-color:white; /* 不支持线性的时候显示 */
    background-image: linear-gradient(to right,white, yellow);
-     /* background:url(./static/img/clubphoto.jpg);
-    background-size: 140px 140px;
-    background-position-x:20%;
-    background-repeat: no-repeat,no-repeat;*/
 }
-.logo{
+
+#news_conent img{
+    margin: 0 auto;
+    width: 480px;
+    height: auto;
+    box-shadow: 5px 5px 5px rgba(0,0,0,.4);
+    /*考虑浏览器兼容性*/
+    -moz-box-shadow: 5px 5px 5px rgba(0,0,0,.4);
+    -webkit-box-shadow: 5px 5px 5px rgba(0,0,0,.4);
+}
+
+.llogo{
   text-shadow:3px 3px 3px rgb(243, 220, 10);
     color: rgb(231, 158, 22);
     font-family: 华文行楷;
@@ -52,12 +39,12 @@
     position: relative;
 }
 
-.logo img{
+.llogo img{
   border-radius: 50%;
 }
 #lbk{
     width: 100%;
-    height: 510px;
+    height: 600px;
     padding: 7px;
 }
 
@@ -74,18 +61,24 @@
     filter: blur(15px);
 }
 
-.contact{
-  padding-top: 40px;
+.lcontact{
+  padding-top: 22px;
   font-family: 微软雅黑;
     font-size: 15px;
     float:left;
 }
-.contact span{
+.lcontact span{
   display: inline;
   float: left;
-
 }
-.footer {
+#lcont{
+    margin: 0 auto;
+}
+#footspan span{
+    display: inline;
+    float: left;
+}
+.lfooter {
   background-image: linear-gradient(to right,white, rgb(226, 226, 179));
   padding: 1px;
   text-align: center;
@@ -137,24 +130,24 @@
     color:#90000a;
   }
 
-  ul,li{
+.topnav ul,li{
       list-style: none;
   }
-  ul li{
+.topnav  ul li{
       float:left;
       text-align: center;
       line-height: 30px;
   }
-  ul li ul li{
+.topnav  ul li ul li{
       float: none;
     color: #90000a;
   }
-  ul li ul {
+.topnav  ul li ul {
       z-index: 2;
       position: absolute;
       display: none;
   }
-  ul li:hover ul{
+.topnav  ul li:hover ul{
     display: block;
     background-color: rgb(231, 158, 22);
     color:#90000a;
@@ -259,44 +252,6 @@
     background-color: white;
     width: 100%;
 }
- 
-
-.containerlb{
-    height: 650px;
-    padding-top: 10px;
-    text-align: center;
-    max-width: 100%;
-    position: relative;
-    margin: auto;
-  background-image: linear-gradient(to right,grey,white,grey);
-}
- .prev, .next {
-    cursor: pointer;
-    position: absolute;
-    top: 50%;
-    width: auto;
-    margin-top: -22px;
-    padding: 16px;
-    color: grey;
-    font-weight: bold;
-    font-size: 50px;
-    transition: 0.6s ease;
-    border-radius: 0 3px 3px 0;
-  }
-  .prev{
-      left:200px;
-      border-radius: 3px 0 0 3px;
-  }
-  .next {
-    right: 200px;
-    border-radius: 3px 0 0 3px;
-  }
-  .prev:hover, .next:hover {
-    background-color: rgba(0,0,0,0.8);
-  }
-
-  .mySlides{display:none}
-  .mySlides1{display: block;}
 
   .text {
     font-family: 宋体;

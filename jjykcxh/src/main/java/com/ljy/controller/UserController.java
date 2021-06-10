@@ -22,18 +22,18 @@ public class UserController {
     @PostMapping("/signup")
     @ResponseBody
     public Msg signup(User user){
-        if (user.getUserName()==""){
+        if (user.getUserName()==""||user.getUserName().length()<3){
             System.out.println("请输入账号");
-            String error_info="请输入账号";
+            String error_info="请输入账号,账号长度在3-11位之间";
             return Msg.fail().add("info",error_info);
         }
-        if(user.getUserPwd()==""){
+        if(user.getUserPwd()==""||user.getUserPwd().length()<6){
             System.out.println("请输入密码");
-            String error_info="请输入密码";
+            String error_info="请输入密码，密码长度大于6";
             return Msg.fail().add("info",error_info);
         }
         if (userService.selectByUserName(user.getUserName()).size()!=0){
-            String error_info="账户已存在,请重试";
+            String error_info="用户名已存在,请重试";
             System.out.println(userService.selectByUserName(user.getUserName()));
             System.out.println(error_info);
             return Msg.fail().add("info",error_info);
@@ -47,11 +47,20 @@ public class UserController {
     @ResponseBody
     public Msg signin(User user,HttpSession session) throws IOException {
         User user1=userService.selectOne(user);
-        if (user1!=null){
+        if (user1==null){
+            String errorInfo="账号密码出错或不存在账号";
+            return Msg.fail().add("errorInfo",errorInfo);
+        }
+        String id=user1.getUserIdentity();
+        if (id.equals("1")){
+            session.setAttribute("admin",user1);
+            session.setAttribute("userInfo",user1);
+            return Msg.success();
+        }else if (id.equals("0")){
             session.setAttribute("userInfo",user1);
             return Msg.success();
         }
-        String errorInfo="账号密码出错或不存在账号";
+        String errorInfo="未知错误，稍后再试";
         return Msg.fail().add("errorInfo",errorInfo);
     }
 

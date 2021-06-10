@@ -23,7 +23,7 @@
 
 <div th:fragment="top_nav">
     <div class="top">
-        <div class="topnav" style="width:900px">
+        <div class="topnav" style="width:960px">
             <ul>
                 <li><a href="/jjykcxh">交协首页</a></li>
                 <li><a href="#">走近交协</a>
@@ -39,14 +39,12 @@
                     </ul>
                 </li>
                 <li><a href="/jjykcxh/album/index">交协印象</a>
-                </li>
                 <li><a href="https://www.cdu.edu.cn/">成大官网</a></li>
                 <li style="float:right" th:if="${session.userInfo==null}"><a href="/jjykcxh/login">登录/注册</a></li>
                 <li style="float:right" th:if="${session.userInfo!=null}"><a href="/jjykcxh/logout">注销</a></li>
-                <li style="float:right" th:if="${session.userInfo!=null}"><a id="wel" href="#" th:text="'您好 '+${session.userInfo.userName}"></a>
+                <li style="float:right" th:if="${session.userInfo!=null}"><a id="wel" href="#" th:text="'您好'+${session.userInfo.userName}"></a>
                     <ul>
-                        <li><a href="#">我的信息</a></li>
-                        <li><a href="#">资料设置</a></li>
+                        <li><a href="/jjykcxh/admin/news/manage" th:if="${session.admin!=null}">进入后台</a></li>
                     </ul>
                 </li>
             </ul>
@@ -77,13 +75,12 @@
     </div>
 </div>
 <div th:fragment="footer">
-    <div class="bktop"><a href="#">↑<br>回到顶部</a></div>
-    <div class="footer">
-        <div style="width:700px; height:150px; padding-bottom: 0; ">
-            <div class="logo"><img src="/jjykcxh/static/img/clubphoto.jpg" width="100" height="100"><span
-                    style="float:right; text-align: center; padding-top: 45px;">&nbsp;&nbsp;交际与口才协会&nbsp;&nbsp;</span></div>
+    <div class="lfooter" style="align-content: center">
+        <div style="width:700px; height:150px; padding-bottom: 0; align-content: center">
+            <div class="llogo"><img src="/jjykcxh/static/img/clubphoto.jpg" width="100" height="100"><span
+                    style="float:right; text-align: center; padding-top: 38px;">&nbsp;&nbsp;交际与口才协会&nbsp;&nbsp;</span></div>
             <div style="float:left ; text-align: center; width: 1px;height: 120px; background: grey;"></div>
-            <div class="contact"><span>&nbsp;&nbsp;&nbsp;&nbsp;版权所有©2019-2020 @成都大学交际与口才协会</span><br><span>&nbsp;&nbsp;&nbsp;&nbsp;地址： 成都市成洛大道2025号第六号教学楼 </span><br><span>&nbsp;&nbsp;&nbsp;&nbsp;电话：028-84616300 邮编：610106</span>
+            <div class="lcontact"><span>&nbsp;&nbsp;&nbsp;&nbsp;版权所有©2019-2021 @成都大学交际与口才协会</span><br><span>&nbsp;&nbsp;&nbsp;&nbsp;地址： 成都市成洛大道2025号第六号教学楼 </span><br><span>&nbsp;&nbsp;&nbsp;&nbsp;电话：028-84616300 邮编：610106</span>
             </div>
         </div>
     </div>

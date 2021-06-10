@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www/thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>交际与口才协会后台管理——新闻发布</title>
+    <title>后台管理——新闻发布</title>
     <th:block th:include="Admin/common.html :: source"></th:block>
 </head>
 <body>
@@ -115,6 +115,12 @@
     //富文本编辑框
     layui.use('layedit', function () {
         var layedit = layui.layedit;
+        layedit.set({
+            uploadImage: {
+                url: '/jjykcxh/news/uploadpic' //接口url
+                ,type: 'post' //默认post
+            }
+        });
         var index = layedit.build('textarea'); //建立编辑器
         layui.use('form', function () {
             var form = layui.form;

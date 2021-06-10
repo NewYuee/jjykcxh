@@ -44,4 +44,12 @@
         <property name="templateEngine" ref="templateEngine"/>
         <property name="characterEncoding" value="UTF-8"/>
     </bean>
+
+    <!--springMvc拦截器，但暂时还没用-->
+    <mvc:interceptors>
+        <mvc:interceptor>
+            <mvc:mapping path="/jjykcxh/**"/>
+            <bean class="com.ljy.interceptor.AdminInterceptor"/>
+        </mvc:interceptor>
+    </mvc:interceptors>
 </beans>

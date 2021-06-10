@@ -3,33 +3,38 @@ package com.ljy.controller;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.ljy.VO.CommentVO;
-import com.ljy.entity.Comment;
-import com.ljy.entity.Msg;
-import com.ljy.entity.News;
-import com.ljy.entity.User;
+import com.ljy.entity.*;
 import com.ljy.service.CommentService;
 import com.ljy.service.NewsService;
+import com.ljy.service.PicsService;
 import com.ljy.service.UserService;
+import com.sun.jersey.api.client.Client;
+import com.sun.jersey.api.client.WebResource;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 @Controller
 @RequestMapping("/news")
 public class NewsController {
     @Autowired
     NewsService newsService;
+
+    @Autowired
+    PicsService picsService;
 
     @Autowired
     CommentService commentService;
@@ -48,6 +53,53 @@ public class NewsController {
         List<News> list=newsService.getNews();
         int count=newsService.getNewsCount();
         return Msg.success().add("news",list).add("count",count);
+    }
+
+
+    @PostMapping("/uploadpic")
+    @ResponseBody
+    public PicsJson uploadInAlbum(MultipartFile file) throws UnsupportedEncodingException {
+        //1.定义上传文件服务器的路径
+        String path="http://120.78.196.234/resource/jjykcxh/news/";
+        //获取上传文件的名称
+        String originalFilename = file.getOriginalFilename();
+        String suffix=originalFilename.substring(originalFilename.lastIndexOf("."));
+        String uuid = UUID.randomUUID().toString().substring(0,10).replace("-", "");
+        String filename=uuid+suffix;
+        //2.1.创建客户端的对象
+        Client client = Client.create();
+        String encodeFileName = URLEncoder.encode(filename,"UTF-8");
+        System.out.println(encodeFileName);
+        //3.和图片服务器进行连接,拿到一个web资源
+        WebResource webResource = client.resource(path + encodeFileName);
+        if(webResource==null){
+            return null;
+        }
+        //4.完成文件上传(getBytes以字节方式传)
+        try {
+            webResource.put(file.getBytes());
+        } catch (IOException e) {
+            return null;
+        }
+        System.out.println("文件上传成功<========="+encodeFileName);
+
+        PicsJson picsJson=new PicsJson();
+        Pics pics=new Pics();
+        pics.setPname(encodeFileName);
+        pics.setSrc(path + encodeFileName);
+        pics.setType("1");
+        int i=picsService.insertOne(pics);
+        if (i==0){
+            return null;
+        }
+
+        picsJson.setCode(0);
+        picsJson.setMsg("ok");
+        Map<String,Object> data= new HashMap<>();
+        data.put("src",pics.getSrc());
+        data.put("title",pics.getPname());
+        picsJson.setData(data);
+        return picsJson;
     }
 
 

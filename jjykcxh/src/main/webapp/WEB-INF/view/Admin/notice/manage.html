@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>交际与口才协会后台管理——通知管理</title>
+    <title>后台管理——通知管理</title>
     <th:block th:include="Admin/common.html :: source"></th:block>
 </head>
 <body>
@@ -100,7 +100,7 @@
 </script>
 <script type="text/html" id="toolbarDemo">
     <div class="layui-btn-container">
-        <button class="layui-btn layui-btn-sm" lay-event="getCheckData">获取选中行数据</button>
+        <button class="layui-btn layui-btn-sm" lay-event="delCheckData">删除选中行数据</button>
         <button class="layui-btn layui-btn-sm" lay-event="getCheckLength">获取选中数目</button>
         <button class="layui-btn layui-btn-sm" lay-event="isAll">验证是否全选</button>
     </div>
@@ -172,13 +172,42 @@
             active[type] ? active[type].call(this) : '';
         });
 
+        function delNotice(id){
+            var res=200;
+            $.ajax({
+                url: "/jjykcxh/notice/deleteById",
+                data: "id=" + id,
+                type: "POST",
+                success: function (result) {
+                    if (result.code != 200) {
+                        res=result.code;
+                    }
+                }
+            });
+            return res;
+        }
+
         //头工具栏事件
         table.on('toolbar(test)', function (obj) {
             var checkStatus = table.checkStatus(obj.config.id);
             switch (obj.event) {
-                case 'getCheckData':
+                case 'delCheckData':
                     var data = checkStatus.data;
-                    layer.alert(JSON.stringify(data));
+                    if(data.length!=0) {
+                        layer.confirm('真的删除这些数据吗', function (index) {
+                            var re;
+                            layer.close(index);
+                            $.each(data, function (i, item) {
+                                re = delNotice(item.noticeId)
+                            });
+                            if (re == 200) {
+                                layer.msg("删除成功!")
+                            } else {
+                                layer.msg("未能全部删除")
+                            }
+                            setTimeout(reloadPage, 1000);
+                        });
+                    }
                     break;
                 case 'getCheckLength':
                     var data = checkStatus.data;
