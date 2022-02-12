@@ -1,5 +1,6 @@
 package com.ljy.controller;
 
+import com.ljy.com.ljy.util.CookieUtil;
 import com.ljy.entity.Msg;
 import com.ljy.entity.User;
 import com.ljy.service.UserService;
@@ -13,6 +14,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.util.Base64;
 import java.util.List;
 
 
@@ -53,6 +55,8 @@ public class UserController {
             String errorInfo="账号密码出错或不存在账号";
             return Msg.fail().add("errorInfo",errorInfo);
         }
+        //密码等敏感信息进行加密处理
+        //Base64.Encoder encoder=Base64.getEncoder();
         String id=user1.getUserIdentity();
         Cookie loginInfo = new Cookie("loginInfo", user1.getUserName()+"&"+user1.getUserPwd()+"&"+id);
         loginInfo.setPath("/");
@@ -72,8 +76,10 @@ public class UserController {
     }
 
     @RequestMapping("logout")
-    public String logout(HttpSession session){
+    public String logout(HttpSession session,HttpServletResponse response,HttpServletRequest request){
         session.removeAttribute("userInfo");
+        Cookie loginInfo = CookieUtil.getCookieByName(request, "loginInfo");
+        loginInfo.setMaxAge(-1);
         return "/index";
     }
 
