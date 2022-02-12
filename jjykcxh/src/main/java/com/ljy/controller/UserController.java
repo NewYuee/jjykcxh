@@ -8,7 +8,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.List;
@@ -45,18 +47,23 @@ public class UserController {
 
     @PostMapping("/signin")
     @ResponseBody
-    public Msg signin(User user,HttpSession session) throws IOException {
+    public Msg signin(User user, HttpSession session, HttpServletResponse response) throws IOException {
         User user1=userService.selectOne(user);
         if (user1==null){
             String errorInfo="账号密码出错或不存在账号";
             return Msg.fail().add("errorInfo",errorInfo);
         }
         String id=user1.getUserIdentity();
+        Cookie loginInfo = new Cookie("loginInfo", user1.getUserName()+"&"+user1.getUserPwd()+"&"+id);
+        loginInfo.setPath("/");
+        loginInfo.setMaxAge(60*60);
         if (id.equals("1")){
+            response.addCookie(loginInfo);
             session.setAttribute("admin",user1);
             session.setAttribute("userInfo",user1);
             return Msg.success();
         }else if (id.equals("0")){
+            response.addCookie(loginInfo);
             session.setAttribute("userInfo",user1);
             return Msg.success();
         }
